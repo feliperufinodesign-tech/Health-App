@@ -30,9 +30,9 @@ export function SleepHistoryList({ logs }: { logs: SleepLog[] }) {
   const ordered = [...logs].reverse();
 
   return (
-    <ul className="flex flex-col divide-y divide-border overflow-hidden rounded-xl border">
+    <ul className="flex flex-col divide-y divide-border overflow-hidden rounded-2xl bg-card shadow-card">
       {ordered.map((log) => (
-        <li key={log.id} className="flex items-center justify-between gap-3 px-4 py-3">
+        <li key={log.id} className="flex items-center justify-between gap-3 px-4 py-3.5">
           <div>
             <p className="text-sm font-medium capitalize">{dayLabel(log.data)}</p>
             <p className="text-xs text-muted-foreground">

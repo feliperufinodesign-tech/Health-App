@@ -34,25 +34,37 @@ export default async function SonoPage() {
   });
 
   return (
-    <main className="flex flex-col gap-6 p-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Sono</h1>
-        <LinkButton href="/hoje" variant="ghost" size="sm">
-          Voltar
-        </LinkButton>
+    <main className="flex flex-col gap-8 p-4 pb-8">
+      <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500 flex flex-col gap-4">
+        <div className="flex items-center justify-between">
+          <h1 className="text-[1.75rem] leading-tight font-semibold tracking-tight">
+            😴 Sono
+          </h1>
+          <LinkButton href="/hoje" variant="ghost" size="sm">
+            Voltar
+          </LinkButton>
+        </div>
+
+        <SleepLogTrigger data={data} hasSleepLog={Boolean(todaySleepLog)} />
       </div>
 
-      <SleepLogTrigger data={data} hasSleepLog={Boolean(todaySleepLog)} />
+      <div
+        className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500 motion-safe:[animation-delay:80ms] motion-safe:fill-mode-both"
+      >
+        <SleepHoursChart logs={recentLogs} />
+      </div>
 
-      <SleepHoursChart logs={recentLogs} />
-
-      <section className="flex flex-col gap-2">
-        <h2 className="text-sm font-semibold">Alertas</h2>
+      <section
+        className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500 motion-safe:[animation-delay:140ms] motion-safe:fill-mode-both flex flex-col gap-3"
+      >
+        <h2 className="text-base font-semibold tracking-tight">Alertas</h2>
         <SleepAlerts alerts={alerts} />
       </section>
 
-      <section className="flex flex-col gap-2">
-        <h2 className="text-sm font-semibold">Histórico</h2>
+      <section
+        className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500 motion-safe:[animation-delay:200ms] motion-safe:fill-mode-both flex flex-col gap-3"
+      >
+        <h2 className="text-base font-semibold tracking-tight">Histórico</h2>
         <SleepHistoryList logs={recentLogs} />
       </section>
     </main>

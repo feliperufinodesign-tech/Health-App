@@ -21,8 +21,8 @@ export function BarTrend({ points, unit = "", height = 56 }: BarTrendProps) {
             <div
               className={
                 i === points.length - 1
-                  ? "w-full rounded-[3px] bg-foreground"
-                  : "w-full rounded-[3px] bg-foreground/15"
+                  ? "w-full rounded-[3px] bg-primary transition-[height] duration-500 ease-out"
+                  : "w-full rounded-[3px] bg-foreground/12 transition-[height] duration-500 ease-out"
               }
               style={{ height: h }}
               title={p.value != null ? `${p.label}: ${p.value}${unit}` : `${p.label}: sem registro`}

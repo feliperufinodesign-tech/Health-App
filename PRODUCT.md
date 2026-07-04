@@ -14,18 +14,18 @@ Usuário único: o próprio dono do app, gerenciando sua rotina de saúde no dia
 
 ## Brand Personality
 
-Preciso e minimalista. Voz de instrumento de precisão, não de coach motivacional: dados em primeiro lugar, sem gamificação forçada, sem tom de torcida ("Você consegue!!"). Confiança tranquila — o tipo de interface que inspira apps de saúde/fitness premium (Whoop, Oura, Apple Health): densidade de dados alta mas legível, gráficos limpos, tipografia com peso e hierarquia claros, silêncio visual entre os elementos.
+Preciso, mas vivo. Voz de instrumento de precisão, não de coach motivacional: dados em primeiro lugar, sem gamificação forçada, sem tom de torcida ("Você consegue!!"). A base é a mesma confiança tranquila de apps de saúde/fitness premium (Whoop, Oura, Apple Health) — densidade de dados alta mas legível, tipografia com peso e hierarquia claros — mas com um único acento de cor e emoji de categoria para dar calor e personalidade, sem virar "app de dieta" raso. Precisão vem de tipografia e hierarquia; calor vem de um pulso de cor usado com intenção, não de decoração espalhada.
 
 ## Anti-references
 
-Não deve parecer um "app de dieta" genérico: nada de paleta pastel infantilizada, ilustrações fofas, emojis decorativos, cards coloridos por categoria, badges de conquista brilhantes ou gamificação óbvia (streaks gritantes, confete). Evitar também o clichê de dashboard SaaS (hero-metric com gradiente, cards idênticos em grid, eyebrows numerados 01/02/03). A precisão vem de tipografia e hierarquia, não de decoração.
+Não deve parecer um "app de dieta" genérico: nada de paleta pastel aleatória, ilustrações fofas soltas, cards coloridos por categoria sem critério, badges de conquista brilhantes ou gamificação óbvia vazia (streaks gritantes sem dado real, confete). Evitar também o clichê de dashboard SaaS (hero-metric com gradiente, cards idênticos em grid, eyebrows numerados 01/02/03). Cor e emoji são permitidos e bem-vindos quando usados como sinal (ação principal, categoria), nunca como preenchimento decorativo.
 
 ## Design Principles
 
 - **Dados em primeiro lugar**: cada tela prioriza o número, a tendência ou o registro sobre qualquer elemento decorativo.
 - **Fricção mínima para registrar**: o caminho para logar uma refeição, série ou dose deve ser o mais curto possível — otimizar para o momento real de uso (mão ocupada, pressa, meio do treino).
-- **Silêncio visual**: ausência de ruído é o luxo aqui. Espaço em branco, hierarquia tipográfica e uma paleta contida comunicam precisão melhor que cor.
-- **Confiança sem cobrança**: tom de instrumento, não de coach. Nunca usar culpa, urgência artificial ou gamificação para motivar.
+- **Um pulso, não um arco-íris**: uma única cor de destaque, usada com intenção (ação principal, "hoje", progresso); o resto da hierarquia vem de tipografia e espaçamento.
+- **Confiança sem cobrança**: tom de instrumento, não de coach. Nunca usar culpa, urgência artificial ou gamificação vazia para motivar.
 - **Um usuário, todo contexto**: nunca desenhar para "novos usuários" genéricos — desenhar para alguém que já vive dentro dos próprios dados.
 
 ## Accessibility & Inclusion

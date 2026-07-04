@@ -1,10 +1,12 @@
+import { RadarIcon } from "lucide-react";
+
 export function InsightBanner({ frase }: { frase: string }) {
   return (
-    <div className="rounded-xl border bg-card px-4 py-3">
-      <p className="text-xs font-medium tracking-wide text-muted-foreground">
-        Insight do dia
+    <div className="flex items-start gap-2.5">
+      <RadarIcon className="mt-0.5 size-4 shrink-0 text-muted-foreground" strokeWidth={1.75} />
+      <p className="text-[0.9375rem] leading-snug text-pretty text-foreground/80">
+        {frase}
       </p>
-      <p className="mt-1 text-sm text-pretty">{frase}</p>
     </div>
   );
 }

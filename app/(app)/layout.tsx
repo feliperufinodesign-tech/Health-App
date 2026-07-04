@@ -6,7 +6,7 @@ export default function AppLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-svh pb-16">
+    <div className="min-h-svh pb-24">
       {children}
       <BottomNav />
     </div>

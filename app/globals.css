@@ -27,6 +27,7 @@
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
@@ -49,78 +50,84 @@
 }
 
 :root {
-  /* Fog: canvas off-white, sempre um degrau abaixo da superfície (Regra dos Dois Planos) */
-  --background: oklch(0.97 0 0);
-  --foreground: oklch(0.145 0 0);
-  /* Paper: superfície de cards/popovers */
+  /* Fog Morno: canvas off-white com leve calor, sempre um degrau abaixo da superfície */
+  --background: oklch(0.97 0.008 70);
+  --foreground: oklch(0.16 0 0);
+  /* Paper: superfície de cards/popovers, sempre com sombra suave (--shadow-card) */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0.16 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  /* Grafite: único "acento" do sistema (Regra do Zero Acento) */
-  --primary: oklch(0.145 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.94 0 0);
-  --secondary-foreground: oklch(0.145 0 0);
-  --muted: oklch(0.94 0 0);
-  --muted-foreground: oklch(0.5 0 0);
-  --accent: oklch(0.94 0 0);
-  --accent-foreground: oklch(0.145 0 0);
-  --destructive: oklch(0.145 0 0);
-  --border: oklch(0.9 0 0);
-  --input: oklch(0.9 0 0);
-  --ring: oklch(0.145 0 0);
-  --chart-1: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.16 0 0);
+  /* Laranja Vital: único acento do sistema (Regra do Pulso Único) */
+  --primary: oklch(0.65 0.19 45);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.94 0.006 70);
+  --secondary-foreground: oklch(0.16 0 0);
+  --muted: oklch(0.94 0.006 70);
+  --muted-foreground: oklch(0.52 0.005 70);
+  --accent: oklch(0.94 0.006 70);
+  --accent-foreground: oklch(0.16 0 0);
+  --destructive: oklch(0.58 0.19 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.9 0.006 70);
+  --input: oklch(0.9 0.006 70);
+  --ring: oklch(0.65 0.19 45);
+  --chart-1: oklch(0.65 0.19 45);
   --chart-2: oklch(0.35 0 0);
   --chart-3: oklch(0.5 0 0);
   --chart-4: oklch(0.65 0 0);
   --chart-5: oklch(0.8 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.97 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.145 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.94 0 0);
-  --sidebar-accent-foreground: oklch(0.145 0 0);
-  --sidebar-border: oklch(0.9 0 0);
-  --sidebar-ring: oklch(0.145 0 0);
+  --radius: 0.75rem;
+  --shadow-card: 0 1px 2px oklch(0 0 0 / 4%), 0 8px 24px -12px oklch(0 0 0 / 10%);
+  --shadow-overlay: 0 16px 40px -12px oklch(0 0 0 / 20%);
+  --sidebar: oklch(0.97 0.008 70);
+  --sidebar-foreground: oklch(0.16 0 0);
+  --sidebar-primary: oklch(0.65 0.19 45);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.94 0.006 70);
+  --sidebar-accent-foreground: oklch(0.16 0 0);
+  --sidebar-border: oklch(0.9 0.006 70);
+  --sidebar-ring: oklch(0.65 0.19 45);
 }
 
 .dark {
   /* Canvas quase preto */
   --background: oklch(0.09 0 0);
   --foreground: oklch(0.96 0 0);
-  /* Superfície: um degrau acima do canvas */
+  /* Superfície: um degrau acima do canvas, com a mesma sombra suave */
   --card: oklch(0.16 0 0);
   --card-foreground: oklch(0.96 0 0);
   --popover: oklch(0.16 0 0);
   --popover-foreground: oklch(0.96 0 0);
-  /* Grafite invertido: quase branco no escuro */
-  --primary: oklch(0.96 0 0);
-  --primary-foreground: oklch(0.09 0 0);
+  /* Laranja Vital continua o único acento, um pouco mais claro pra ler no escuro */
+  --primary: oklch(0.7 0.18 45);
+  --primary-foreground: oklch(0.14 0 0);
   --secondary: oklch(0.22 0 0);
   --secondary-foreground: oklch(0.96 0 0);
   --muted: oklch(0.22 0 0);
   --muted-foreground: oklch(0.65 0 0);
   --accent: oklch(0.22 0 0);
   --accent-foreground: oklch(0.96 0 0);
-  --destructive: oklch(0.96 0 0);
+  --destructive: oklch(0.65 0.19 25);
+  --destructive-foreground: oklch(1 0 0);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.7 0 0);
-  --chart-1: oklch(0.96 0 0);
+  --ring: oklch(0.7 0.18 45);
+  --chart-1: oklch(0.7 0.18 45);
   --chart-2: oklch(0.8 0 0);
   --chart-3: oklch(0.65 0 0);
   --chart-4: oklch(0.5 0 0);
   --chart-5: oklch(0.35 0 0);
+  --shadow-card: 0 1px 2px oklch(0 0 0 / 20%), 0 8px 24px -12px oklch(0 0 0 / 40%);
+  --shadow-overlay: 0 16px 40px -12px oklch(0 0 0 / 60%);
   --sidebar: oklch(0.12 0 0);
   --sidebar-foreground: oklch(0.96 0 0);
-  --sidebar-primary: oklch(0.96 0 0);
-  --sidebar-primary-foreground: oklch(0.09 0 0);
+  --sidebar-primary: oklch(0.7 0.18 45);
+  --sidebar-primary-foreground: oklch(0.14 0 0);
   --sidebar-accent: oklch(0.22 0 0);
   --sidebar-accent-foreground: oklch(0.96 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.7 0 0);
+  --sidebar-ring: oklch(0.7 0.18 45);
 }
 
 @layer base {
@@ -132,5 +139,29 @@
   }
   html {
     @apply font-sans;
+  }
+  .font-mono {
+    font-feature-settings: "tnum" 1, "cv01" 1;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer utilities {
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  .shadow-overlay {
+    box-shadow: var(--shadow-overlay);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

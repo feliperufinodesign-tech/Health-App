@@ -1,38 +1,28 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-03T00:00:00Z",
+  "generatedAt": "2026-07-04T00:00:00Z",
   "title": "Design System: Rotina & Saúde",
   "extensions": {
     "colorMeta": {
       "primary": {
         "role": "primary",
-        "displayName": "Grafite",
-        "canonical": "oklch(0.145 0 0)",
+        "displayName": "Laranja Vital",
+        "canonical": "oklch(0.65 0.19 45)",
         "tonalRamp": [
-          "oklch(0.09 0 0)",
-          "oklch(0.145 0 0)",
-          "oklch(0.205 0 0)",
-          "oklch(0.30 0 0)",
-          "oklch(0.50 0 0)",
-          "oklch(0.708 0 0)",
-          "oklch(0.90 0 0)",
-          "oklch(0.97 0 0)"
+          "oklch(0.30 0.12 45)",
+          "oklch(0.40 0.15 45)",
+          "oklch(0.50 0.18 45)",
+          "oklch(0.58 0.19 45)",
+          "oklch(0.65 0.19 45)",
+          "oklch(0.75 0.15 45)",
+          "oklch(0.85 0.09 45)",
+          "oklch(0.93 0.04 45)"
         ]
       },
       "bg": {
         "role": "neutral",
-        "displayName": "Fog",
-        "canonical": "oklch(0.97 0 0)",
-        "tonalRamp": [
-          "oklch(0.09 0 0)",
-          "oklch(0.16 0 0)",
-          "oklch(0.30 0 0)",
-          "oklch(0.50 0 0)",
-          "oklch(0.708 0 0)",
-          "oklch(0.90 0 0)",
-          "oklch(0.97 0 0)",
-          "oklch(1 0 0)"
-        ]
+        "displayName": "Fog Morno",
+        "canonical": "oklch(0.97 0.008 70)"
       },
       "surface": {
         "role": "neutral",
@@ -42,26 +32,37 @@
       "hairline": {
         "role": "neutral",
         "displayName": "Hairline",
-        "canonical": "oklch(0.90 0 0)"
+        "canonical": "oklch(0.9 0.006 70)"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(0.16 0 0)"
       },
       "muted": {
         "role": "neutral",
-        "displayName": "Cinza-médio",
-        "canonical": "oklch(0.50 0 0)"
+        "displayName": "Muted",
+        "canonical": "oklch(0.52 0.005 70)"
+      },
+      "destructive": {
+        "role": "tertiary",
+        "displayName": "Alerta",
+        "canonical": "oklch(0.58 0.19 25)"
       }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Título de tela, uma vez por página." },
+      "display": { "displayName": "Display", "purpose": "Saudação/título de tela." },
       "title": { "displayName": "Title", "purpose": "Título de card ou seção." },
-      "body": { "displayName": "Body", "purpose": "Texto corrido, a maior parte da interface." },
-      "label": { "displayName": "Label", "purpose": "Rótulos de campo, tabs, badges." },
-      "data": { "displayName": "Data", "purpose": "Valores numéricos isolados em Geist Mono (kg, min, mg, horas)." }
+      "body": { "displayName": "Body", "purpose": "Texto corrido." },
+      "label": { "displayName": "Label", "purpose": "Rótulos, tabs, badges." },
+      "data": { "displayName": "Data", "purpose": "Valores numéricos isolados em Geist Mono." }
     },
     "shadows": [
-      { "name": "overlay", "value": "0 8px 24px -8px oklch(0 0 0 / 12%)", "purpose": "Única sombra do sistema; usada em dialog, popover, dropdown." }
+      { "name": "card", "value": "0 1px 2px oklch(0 0 0 / 4%), 0 8px 24px -12px oklch(0 0 0 / 10%)", "purpose": "Todo card em repouso." },
+      { "name": "overlay", "value": "0 16px 40px -12px oklch(0 0 0 / 20%)", "purpose": "Dialog, popover, dropdown, FAB expandido." }
     ],
     "motion": [
-      { "name": "ease-standard", "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Transições padrão de estado (hover, foco, abertura de overlay)." }
+      { "name": "ease-standard", "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Transições padrão de estado." }
     ],
     "breakpoints": [
       { "name": "sm", "value": "640px" },
@@ -74,80 +75,53 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Ação principal da tela. Fundo Grafite, texto Fog, único elemento 'cheio' da interface.",
+      "description": "Ação principal. Fundo Laranja Vital, texto branco.",
       "html": "<button class=\"ds-btn-primary\">Registrar refeição</button>",
-      "css": ".ds-btn-primary { background: oklch(0.145 0 0); color: oklch(0.985 0 0); padding: 6px 14px; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500; border: none; transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary:hover { opacity: 0.8; } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px oklch(0.90 0 0); }"
-    },
-    {
-      "name": "Outline Button",
-      "kind": "button",
-      "refersTo": "button-outline",
-      "description": "Ação secundária, a mais comum na interface (cancelar, editar, ações de linha).",
-      "html": "<button class=\"ds-btn-outline\">Cancelar</button>",
-      "css": ".ds-btn-outline { background: oklch(1 0 0); color: oklch(0.145 0 0); padding: 6px 14px; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500; border: 1px solid oklch(0.90 0 0); transition: background 0.15s cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-outline:hover { background: oklch(0.97 0 0); }"
+      "css": ".ds-btn-primary { background: oklch(0.65 0.19 45); color: oklch(1 0 0); padding: 6px 14px; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500; border: none; transition: filter 0.15s cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary:hover { filter: brightness(0.94); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px oklch(0.65 0.19 45 / 30%); }"
     },
     {
       "name": "Card",
       "kind": "card",
       "refersTo": "card",
-      "description": "Superfície Paper sobre canvas Fog, separada por borda hairline, sem sombra.",
-      "html": "<div class=\"ds-card\"><div class=\"ds-card-title\">Treino de hoje</div><div class=\"ds-card-body\">Peito e tríceps — 6 exercícios</div></div>",
-      "css": ".ds-card { background: oklch(1 0 0); border: 1px solid oklch(0.90 0 0); border-radius: 0.875rem; padding: 16px; display: flex; flex-direction: column; gap: 4px; } .ds-card-title { font-size: 1rem; font-weight: 600; color: oklch(0.145 0 0); } .ds-card-body { font-size: 0.875rem; font-weight: 400; color: oklch(0.50 0 0); }"
+      "description": "Superfície Paper com sombra suave sobre o canvas Fog Morno.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-title\">Sono</div><div class=\"ds-card-body\">7.2h · disposição 4/5</div></div>",
+      "css": ".ds-card { background: oklch(1 0 0); border-radius: 1.125rem; padding: 16px; box-shadow: 0 1px 2px oklch(0 0 0 / 4%), 0 8px 24px -12px oklch(0 0 0 / 10%); display: flex; flex-direction: column; gap: 4px; } .ds-card-title { font-size: 1rem; font-weight: 600; color: oklch(0.16 0 0); } .ds-card-body { font-size: 0.875rem; color: oklch(0.52 0.005 70); }"
     },
     {
-      "name": "Input Field",
-      "kind": "input",
-      "refersTo": "input",
-      "description": "Campo de texto com borda hairline; foco troca borda para Grafite, sem cor de destaque.",
-      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"250g de frango\" />",
-      "css": ".ds-input { width: 100%; height: 2rem; border: 1px solid oklch(0.90 0 0); border-radius: 0.5rem; background: transparent; padding: 4px 10px; font-size: 0.875rem; color: oklch(0.145 0 0); outline: none; transition: border-color 0.15s, box-shadow 0.15s; } .ds-input::placeholder { color: oklch(0.50 0 0); } .ds-input:focus-visible { border-color: oklch(0.145 0 0); box-shadow: 0 0 0 3px oklch(0.90 0 0); }"
-    },
-    {
-      "name": "Chip / Badge",
-      "kind": "chip",
-      "refersTo": "badge",
-      "description": "Rótulo neutro sem variação de cor por categoria; status se lê pelo texto.",
-      "html": "<span class=\"ds-badge\">Concluído</span>",
-      "css": ".ds-badge { display: inline-flex; align-items: center; height: 1.25rem; padding: 2px 10px; border-radius: 9999px; background: oklch(0.97 0 0); color: oklch(0.145 0 0); font-size: 0.75rem; font-weight: 500; }"
-    },
-    {
-      "name": "Data Readout",
-      "kind": "custom",
-      "refersTo": "typography.data",
-      "description": "Valor numérico isolado em Geist Mono — peso, horas de sono, dose de medicação.",
-      "html": "<div class=\"ds-data\"><span class=\"ds-data-value\">72,4</span><span class=\"ds-data-unit\">kg</span></div>",
-      "css": ".ds-data { display: flex; align-items: baseline; gap: 4px; } .ds-data-value { font-family: ui-monospace, monospace; font-size: 0.875rem; font-weight: 500; letter-spacing: -0.01em; color: oklch(0.145 0 0); } .ds-data-unit { font-size: 0.75rem; color: oklch(0.50 0 0); }"
+      "name": "Floating Bottom Nav + FAB",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Navegação inferior flutuante em pílula com FAB de ação rápida em Laranja Vital.",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-nav-item ds-nav-item--active\">Hoje</span><span class=\"ds-nav-item\">Treino</span><button class=\"ds-fab\">+</button></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 12px; background: oklch(1 0 0); border-radius: 9999px; padding: 8px 12px; box-shadow: 0 16px 40px -12px oklch(0 0 0 / 20%); } .ds-nav-item { font-size: 0.75rem; color: oklch(0.52 0.005 70); padding: 6px 10px; border-radius: 9999px; } .ds-nav-item--active { color: oklch(0.16 0 0); font-weight: 600; background: oklch(0.94 0.006 70); } .ds-fab { width: 40px; height: 40px; border-radius: 9999px; background: oklch(0.65 0.19 45); color: white; border: none; font-size: 1.25rem; box-shadow: 0 16px 40px -12px oklch(0 0 0 / 20%); }"
     }
   ],
   "narrative": {
-    "northStar": "O Instrumento Silencioso",
-    "overview": "Rotina & Saúde não decora dados, ele os apresenta. A referência é o app do Oura Ring: uma escala de cinza pura do branco ao preto, sem cor de marca, onde a única hierarquia visível vem de peso tipográfico, espaçamento e contornos finos. Isso não é indecisão de paleta — é a decisão. Um único usuário revisa os próprios números várias vezes ao dia; qualquer cor que não seja funcional é ruído competindo com o dado. O sistema rejeita explicitamente o clichê de 'app de dieta' e o clichê SaaS. Densidade é alta mas nunca apertada. Light e dark mode recebem o mesmo nível de cuidado.",
+    "northStar": "Sinal Vital",
+    "overview": "Rotina & Saúde é um painel pessoal, não um formulário burocrático. A base continua neutra e densa, mas agora com um pulso: um único laranja quente que marca o que está vivo agora, sobre um canvas off-white macio e cartões brancos com sombra suave. Cor e emoji voltam como sinal, não decoração.",
     "keyCharacteristics": [
-      "Zero cor de marca. Toda hierarquia vem de peso, tamanho, espaçamento e opacidade de preto/branco.",
-      "Bordas finas (hairline, 1px) substituem sombra como principal sinal de separação entre superfícies.",
-      "Dois planos de fundo por tema (canvas + superfície) — nunca um único branco chapado atrás de cards brancos.",
-      "Tipografia Geist Sans para tudo, Geist Mono reservado para leituras numéricas."
+      "Um único acento: laranja quente, usado com moderação.",
+      "Canvas off-white morno, cartões com sombra suave.",
+      "Emoji como ícone de categoria, nunca decoração de frase.",
+      "Navegação inferior flutuante em pílula com FAB.",
+      "Geist Mono reservado para leituras numéricas."
     ],
     "rules": [
-      { "name": "A Regra do Zero Acento", "body": "Nenhuma cor de marca em nenhum lugar da interface — nem em estados de erro, sucesso ou alerta. Diferenças de estado se comunicam por peso tipográfico, ícone, sublinhado ou opacidade do grafite, nunca por matiz.", "section": "colors" },
-      { "name": "A Regra dos Dois Planos", "body": "Nunca um branco puro atrás de um branco puro. Canvas e superfície são sempre dois degraus de cinza distintos.", "section": "colors" },
-      { "name": "A Regra do Peso, Não da Cor", "body": "Ênfase se constrói subindo de 400 para 600 e de text-xs para text-sm/text-base — nunca introduzindo cor nova.", "section": "typography" },
-      { "name": "A Regra do Flat-Por-Padrão", "body": "Sombra é exceção, não hábito. Só aparece em overlays (dialog, popover, dropdown); cards e listas usam apenas hairline.", "section": "elevation" }
+      { "name": "A Regra do Pulso Único", "body": "O laranja aparece em no máximo ~15% de qualquer tela — ação primária, 'hoje', progresso.", "section": "colors" },
+      { "name": "A Regra dos Dois Planos", "body": "Canvas e superfície são dois degraus distintos, reforçados por sombra suave.", "section": "colors" },
+      { "name": "A Regra da Sombra Viva", "body": "Toda superfície elevada tem sombra suave; hairline vira reforço pontual, não a única separação.", "section": "elevation" }
     ],
     "dos": [
-      "Do usar peso tipográfico (400→600) e tamanho para criar hierarquia, nunca cor.",
-      "Do manter dois planos de cinza distintos entre canvas e superfície.",
-      "Do usar Geist Mono só para valores numéricos isolados.",
-      "Do tratar dark mode como tema de primeira classe, com seus próprios valores curados.",
-      "Do usar bordas hairline de 1px como principal sinal de separação entre blocos."
+      "Do usar o laranja com intenção: ação primária, 'hoje', progresso.",
+      "Do dar sombra suave a todo card em repouso.",
+      "Do usar emoji como ícone de categoria, sempre no mesmo tamanho e posição.",
+      "Do manter Geist Mono para números isolados."
     ],
     "donts": [
-      "Don't introduzir cor de marca em nenhum estado, incluindo erro, sucesso ou alerta.",
-      "Don't usar paleta pastel, ilustrações fofas, emojis decorativos ou badges de conquista brilhantes.",
-      "Don't aplicar sombra em cards ou listas no fluxo normal.",
-      "Don't usar border-left/border-right coloridos como acento decorativo.",
-      "Don't usar hero-metric com gradiente, grades de cards idênticos, ou eyebrows numerados.",
-      "Don't colocar branco puro atrás de branco puro."
+      "Don't espalhar o laranja por mais de ~15% de uma tela.",
+      "Don't usar emoji como decoração de frase corrida.",
+      "Don't usar paleta pastel aleatória ou badges de conquista brilhantes.",
+      "Don't usar hero-metric com gradiente, grades de cards idênticos, ou eyebrows numerados."
     ]
   }
 }

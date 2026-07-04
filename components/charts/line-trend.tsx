@@ -45,11 +45,11 @@ export function LineTrend({ values, width = 240, height = 56 }: LineTrendProps) 
       <path
         d={path}
         fill="none"
-        className="stroke-foreground/25"
+        className="stroke-foreground/20"
         strokeWidth={1.5}
         vectorEffect="non-scaling-stroke"
       />
-      <circle cx={lastX} cy={lastY} r={2.5} className="fill-foreground" />
+      <circle cx={lastX} cy={lastY} r={3} className="fill-primary" />
     </svg>
   );
 }

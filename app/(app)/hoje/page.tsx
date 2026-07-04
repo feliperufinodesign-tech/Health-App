@@ -12,12 +12,12 @@ import {
 } from "@/lib/insights";
 import { todayISO, todayDiaSemana, nowHHMM } from "@/lib/date";
 import { GreetingHeader } from "@/components/home/greeting-header";
+import { DayStrip } from "@/components/home/day-strip";
 import { InsightBanner } from "@/components/home/insight-banner";
 import { EnergyCard } from "@/components/home/energy-card";
 import { SleepTrendCard } from "@/components/home/sleep-trend-card";
 import { WeightTrendCard } from "@/components/home/weight-trend-card";
 import { PendingChecklist } from "@/components/home/pending-checklist";
-import { LinkButton } from "@/components/ui/link-button";
 
 export default async function HojePage() {
   const supabase = await createClient();
@@ -68,25 +68,28 @@ export default async function HojePage() {
   const workoutDone = Boolean(session?.concluido);
 
   return (
-    <main className="flex flex-col gap-6 p-4">
-      <GreetingHeader email={user?.email} />
-
-      <InsightBanner frase={frase} />
-
-      <EnergyCard score={score} history={energyHistory} />
-
-      <div className="grid grid-cols-2 gap-3">
-        <SleepTrendCard logs={sleepHistory} />
-        <WeightTrendCard data={data} logs={weightHistory} />
+    <main className="flex flex-col gap-8 p-4 pb-8">
+      <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500 flex flex-col gap-4">
+        <GreetingHeader email={user?.email} />
+        <InsightBanner frase={frase} />
+        <DayStrip />
       </div>
 
-      <section className="flex flex-col gap-2">
-        <div className="flex items-center justify-between">
-          <h2 className="text-sm font-semibold">Hoje</h2>
-          <LinkButton href="/sono" variant="ghost" size="sm">
-            Ver sono
-          </LinkButton>
+      <div
+        className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500 motion-safe:[animation-delay:80ms] motion-safe:fill-mode-both flex flex-col gap-3"
+      >
+        <EnergyCard score={score} history={energyHistory} />
+
+        <div className="grid grid-cols-2 gap-3">
+          <SleepTrendCard logs={sleepHistory} />
+          <WeightTrendCard data={data} logs={weightHistory} />
         </div>
+      </div>
+
+      <section
+        className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500 motion-safe:[animation-delay:160ms] motion-safe:fill-mode-both flex flex-col gap-3"
+      >
+        <h2 className="text-base font-semibold tracking-tight">Pendências de hoje</h2>
         <PendingChecklist
           data={data}
           hasSleepLog={Boolean(sleepLog)}

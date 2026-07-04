@@ -12,17 +12,18 @@ export function WeightTrendCard({
   const last = logs[logs.length - 1];
 
   return (
-    <div className="flex flex-col gap-3 rounded-xl border bg-card p-4">
-      <div className="flex items-baseline justify-between">
-        <p className="text-sm font-semibold">Peso</p>
-        <div className="flex items-center gap-1">
-          <p className="font-mono text-sm">
-            {last ? `${last.peso_kg}kg` : "—"}
-          </p>
-          <WeightLogDialog data={data} />
-        </div>
+    <div className="flex flex-col gap-4 rounded-2xl bg-card p-4 shadow-card">
+      <div className="flex items-start justify-between gap-2">
+        <p className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+          <span aria-hidden>⚖️</span> Peso
+        </p>
+        <WeightLogDialog data={data} />
       </div>
-      <LineTrend values={logs.map((l) => l.peso_kg)} />
+      <p className="font-mono text-2xl font-semibold tracking-tight">
+        {last ? last.peso_kg : "—"}
+        {last && <span className="text-sm font-normal text-muted-foreground">kg</span>}
+      </p>
+      <LineTrend values={logs.map((l) => l.peso_kg)} height={32} />
     </div>
   );
 }

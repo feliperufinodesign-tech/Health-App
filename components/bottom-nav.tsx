@@ -9,6 +9,7 @@ import {
   Dumbbell,
   Pill,
   Bot,
+  Plus,
 } from "lucide-react";
 
 const NAV_ITEMS = [
@@ -23,28 +24,37 @@ export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-50 border-t bg-background">
-      <ul className="flex items-stretch justify-between">
-        {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
-          const active = pathname.startsWith(href);
-          return (
-            <li key={href} className="flex-1">
-              <Link
-                href={href}
-                className={cn(
-                  "flex flex-col items-center gap-1 py-2 text-xs",
-                  active
-                    ? "text-foreground font-medium"
-                    : "text-muted-foreground",
-                )}
-              >
-                <Icon className="size-5" />
-                <span>{label}</span>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+    <nav className="fixed inset-x-0 bottom-0 z-50 flex justify-center pb-[calc(env(safe-area-inset-bottom)+16px)]">
+      <div className="flex items-center gap-2">
+        <ul className="flex items-center gap-0.5 rounded-full bg-card p-1.5 shadow-overlay">
+          {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
+            const active = pathname.startsWith(href);
+            return (
+              <li key={href}>
+                <Link
+                  href={href}
+                  aria-label={label}
+                  className={cn(
+                    "flex size-10 items-center justify-center rounded-full transition-colors",
+                    active
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  <Icon className="size-[1.15rem]" strokeWidth={active ? 2.25 : 1.85} />
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+        <Link
+          href="/assistente"
+          aria-label="Registro rápido com o assistente"
+          className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-overlay transition-transform active:scale-95"
+        >
+          <Plus className="size-5" strokeWidth={2.5} />
+        </Link>
+      </div>
     </nav>
   );
 }

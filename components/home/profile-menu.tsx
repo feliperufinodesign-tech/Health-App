@@ -20,11 +20,12 @@ export function ProfileMenu({ email }: { email: string | undefined }) {
           <Button
             variant="outline"
             size="icon"
+            className="rounded-full transition-transform active:scale-95"
             aria-label="Abrir perfil"
           />
         }
       >
-        <UserRound className="size-4" />
+        <UserRound className="size-4" strokeWidth={1.75} />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

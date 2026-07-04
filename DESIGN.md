@@ -1,20 +1,22 @@
 ---
 name: Rotina & Saúde
-description: Painel pessoal de saúde em escala de cinza, silencioso por design
+description: Painel pessoal de saúde, neutro e caloroso, com um pulso de cor
 colors:
-  primary: "oklch(0.145 0 0)"
-  primary-foreground: "oklch(0.985 0 0)"
-  bg: "oklch(0.97 0 0)"
+  primary: "oklch(0.65 0.19 45)"
+  primary-foreground: "oklch(1 0 0)"
+  bg: "oklch(0.97 0.008 70)"
   surface: "oklch(1 0 0)"
-  hairline: "oklch(0.90 0 0)"
-  muted: "oklch(0.50 0 0)"
+  hairline: "oklch(0.9 0.006 70)"
+  ink: "oklch(0.16 0 0)"
+  muted: "oklch(0.52 0.005 70)"
+  destructive: "oklch(0.58 0.19 25)"
 typography:
   display:
     fontFamily: "Geist, system-ui, sans-serif"
-    fontSize: "1.5rem"
+    fontSize: "1.75rem"
     fontWeight: 600
     lineHeight: 1.2
-    letterSpacing: "-0.01em"
+    letterSpacing: "-0.02em"
   title:
     fontFamily: "Geist, system-ui, sans-serif"
     fontSize: "1rem"
@@ -44,6 +46,7 @@ rounded:
   md: "0.5rem"
   lg: "0.625rem"
   xl: "0.875rem"
+  2xl: "1.125rem"
   full: "9999px"
 spacing:
   xs: "4px"
@@ -62,12 +65,12 @@ components:
     textColor: "{colors.primary-foreground}"
   button-outline:
     backgroundColor: "{colors.surface}"
-    textColor: "{colors.primary}"
+    textColor: "{colors.ink}"
     rounded: "{rounded.md}"
     padding: "6px 14px"
   card:
     backgroundColor: "{colors.surface}"
-    rounded: "{rounded.xl}"
+    rounded: "{rounded.2xl}"
     padding: "16px"
 ---
 
@@ -75,113 +78,103 @@ components:
 
 ## 1. Overview
 
-**Creative North Star: "O Instrumento Silencioso"**
+**Creative North Star: "Sinal Vital"**
 
-Rotina & Saúde não decora dados, ele os apresenta. A referência é o app do Oura Ring: uma escala de cinza pura do branco ao preto, sem cor de marca, onde a única hierarquia visível vem de peso tipográfico, espaçamento e contornos finos. Isso não é indecisão de paleta — é a decisão. Um único usuário revisa os próprios números várias vezes ao dia; qualquer cor que não seja funcional é ruído competindo com o dado.
+Rotina & Saúde é um painel pessoal, não um formulário burocrático. A base continua sendo a mesma disciplina de antes — neutro, denso, sem ruído — mas agora com um pulso: um único laranja quente que marca o que está vivo agora (a ação de hoje, o progresso, a conclusão), sobre um canvas off-white macio e cartões brancos com sombra suave, no espírito de apps como o de leitura por hábito ou o Iconly: cordial sem infantilizar, denso sem parecer burocrático.
 
-O sistema rejeita explicitamente o clichê de "app de dieta": nada de paleta pastel, ilustrações fofas, emojis decorativos, cards coloridos por categoria ou badges de conquista brilhantes. Rejeita também o clichê SaaS: sem hero-metric com gradiente, sem cards idênticos em grade, sem eyebrows numerados. Onde antes o tema shadcn "neutral" era um ponto de partida genérico, aqui a neutralidade é o produto final, tratada com a mesma curadoria que outro sistema daria à cor.
+O sistema ainda rejeita o clichê de "app de dieta" raso (paleta pastel aleatória, cards idênticos, gamificação vazia), mas não rejeita mais cor ou emoji por princípio — eles voltam como sinal, não decoração: o laranja marca o que é acionável e vivo; o emoji, quando usado, substitui um ícone de linha para dar identidade a uma categoria (sono, treino, alimentação, medicação), nunca decora frases soltas.
 
-Densidade é alta mas nunca apertada: `text-sm` e `text-xs` dominam porque o usuário já sabe o que está olhando — não precisa de títulos gigantes explicando o óbvio. Light e dark mode recebem o mesmo nível de cuidado, já que o app é usado tanto de manhã quanto à noite (academia, cozinha, cama).
+Densidade continua alta (`text-sm`/`text-xs` predominam), mas a superfície ganha elevação real: sombra suave e ambiente em todos os cards (não só em overlays), tiras de navegação horizontais, controles segmentados em pílula, e uma navegação inferior flutuante com ação rápida (FAB). Light e dark mode continuam recebendo o mesmo cuidado.
 
 **Key Characteristics:**
-- Zero cor de marca. Toda hierarquia vem de peso, tamanho, espaçamento e opacidade de preto/branco.
-- Bordas finas (hairline, 1px) substituem sombra como principal sinal de separação entre superfícies.
-- Dois planos de fundo por tema (canvas + superfície) — nunca um único branco chapado atrás de cards brancos.
-- Tipografia Geist Sans para tudo, Geist Mono reservado para leituras numéricas (peso, séries, horas de sono).
+- Um único acento: laranja quente (`primary`), usado com moderação — ação primária, indicador ativo, progresso, "hoje".
+- Canvas off-white morno (não branco puro), cartões brancos com sombra suave — nunca mais flat-por-padrão.
+- Emoji como ícone de categoria (sono, treino, alimentação, medicação), nunca como decoração de frase.
+- Navegação inferior flutuante em pílula com um FAB de ação rápida.
+- Geist Mono reservado para leituras numéricas.
 
 ## 2. Colors
 
-Uma escala de cinza pura (chroma 0) do fog ao grafite. Não existe "primário" no sentido de marca — o papel de destaque é ocupado pelo próprio preto/branco em contraste máximo.
+Um canvas neutro e morno carrega a base; o laranja é usado com intenção, nunca como preenchimento generalizado.
 
 ### Primary
-- **Grafite** (`oklch(0.145 0 0)`): o único "acento" do sistema. Usado em botões primários, estado ativo de abas, foco de input, texto de maior ênfase. Em modo claro é quase preto; em modo escuro inverte para quase branco (ver Dark Mode Equivalents).
+- **Laranja Vital** (`oklch(0.65 0.19 45)`): a única cor de destaque do sistema. Botão primário, dia ativo na tira de datas, FAB, indicador de progresso/streak, checkbox concluído. Texto sempre branco sobre ele (contraste e leitura perceptual).
 
 ### Neutral
-- **Fog** (`oklch(0.97 0 0)`): fundo de canvas (`body`, área por trás dos cards). Off-white, nunca branco puro — é o que separa o canvas da superfície sem precisar de sombra.
-- **Paper** (`oklch(1 0 0)`): superfície de cards, dialogs, popovers. Branco puro, sempre um degrau acima do Fog.
-- **Hairline** (`oklch(0.90 0 0)`): bordas e divisores. Fino (1px), nunca mais espesso — é a linha, não o preenchimento, que separa blocos de conteúdo.
-- **Cinza-médio** (`oklch(0.50 0 0)`): texto secundário, labels, ícones inativos. Contraste ≥4.5:1 contra Fog e Paper.
+- **Fog Morno** (`oklch(0.97 0.008 70)`): fundo de canvas. Off-white com leve calor, nunca branco puro.
+- **Paper** (`oklch(1 0 0)`): superfície de cards, dialogs, popovers, sempre com sombra suave por cima do Fog.
+- **Hairline** (`oklch(0.9 0.006 70)`): bordas onde a sombra sozinha não basta (divisores de lista, inputs).
+- **Ink** (`oklch(0.16 0 0)`): texto primário, sempre acromático — o calor mora no fundo e no acento, não no texto.
+- **Muted** (`oklch(0.52 0.005 70)`): texto secundário, labels, ícones inativos.
 
 ### Named Rules
-**A Regra do Zero Acento.** Nenhuma cor de marca em nenhum lugar da interface — nem em estados de erro, sucesso ou alerta. Diferenças de estado se comunicam por peso tipográfico, ícone, sublinhado ou variação de opacidade do grafite, nunca por matiz. Se uma tela parece precisar de vermelho para "funcionar", o problema é de hierarquia ou copy, não de paleta.
+**A Regra do Pulso Único.** Uma cor, usada com intenção: o laranja aparece em no máximo ~15% de qualquer tela — ação primária, "hoje", progresso. Fora disso, hierarquia continua vindo de peso e espaçamento.
 
-**A Regra dos Dois Planos.** Nunca um branco puro atrás de um branco puro. Canvas (Fog) e superfície (Paper) são sempre dois degraus de cinza distintos, mesmo que sutis — é isso que substitui a sombra como sinal de profundidade.
-
-### Dark Mode Equivalents
-
-Dark mode não é um inverso automático — é curado com o mesmo peso do claro:
-- **Canvas** (`oklch(0.09 0 0)`): substitui Fog. Quase preto, chroma 0.
-- **Superfície** (`oklch(0.16 0 0)`): substitui Paper. Um degrau acima do canvas.
-- **Hairline** (`oklch(1 0 0 / 10%)`): borda translúcida em vez de cinza sólido — em fundo escuro, opacidade lê melhor que um novo tom de cinza.
-- **Grafite invertido** (`oklch(0.96 0 0)`): substitui o "primary" — pílulas e botões primários ficam quase brancos com texto quase preto (`oklch(0.09 0 0)`).
-- **Cinza-médio** (`oklch(0.65 0 0)`): texto secundário, mesma função do claro.
+**A Regra dos Dois Planos.** Canvas (Fog Morno) e superfície (Paper) continuam sendo dois degraus distintos; agora a separação é reforçada por sombra suave, não só por contraste de cinza.
 
 ## 3. Typography
 
 **Display/Body Font:** Geist (com fallback `system-ui, sans-serif`)
 **Data Font:** Geist Mono (com fallback `ui-monospace, monospace`)
 
-**Character:** Uma única família sem serifa carrega toda a hierarquia — o contraste vem de peso e tamanho, não de troca de tipo. Geist Mono é reservado para leituras numéricas isoladas (peso de uma série, horas de sono, dose de medicação): o monoespaçado sinaliza "isto é um dado medido", diferenciando-o de rótulo ou prosa sem precisar de cor.
+**Character:** Uma família sem serifa carrega toda a hierarquia. Geist Mono é reservado para leituras numéricas isoladas (peso, horas de sono, dose, score).
 
 ### Hierarchy
-- **Display** (600, 1.5rem/24px, 1.2, -0.01em): título de tela (ex: "Hoje", nome do plano de treino). Usado uma vez por tela, no topo.
-- **Title** (600, 1rem/16px, 1.3): título de card ou seção (ex: nome do exercício, nome da refeição).
-- **Body** (400, 0.875rem/14px, 1.5): texto corrido, descrições, itens de lista — a maior parte da interface vive aqui.
-- **Label** (500, 0.75rem/12px, 1.4, 0.01em): rótulos de campo, tabs, badges. Sentence case, nunca uppercase decorativo.
-- **Data** (500, 0.875rem/14px, mono, -0.01em): valores numéricos isolados (kg, min, mg, horas) que o usuário escaneia rapidamente.
-
-### Named Rules
-**A Regra do Peso, Não da Cor.** Ênfase se constrói subindo de 400 para 600 e de `text-xs` para `text-sm`/`text-base` — nunca introduzindo uma cor nova para "destacar" algo.
+- **Display** (600, 1.75rem/28px, 1.2, -0.02em): saudação/título de tela.
+- **Title** (600, 1rem/16px, 1.3): título de card ou seção.
+- **Body** (400, 0.875rem/14px, 1.5): texto corrido.
+- **Label** (500, 0.75rem/12px, 1.4, 0.01em): rótulos, tabs, badges.
+- **Data** (500, 0.875rem/14px, mono, -0.01em): valores numéricos isolados.
 
 ## 4. Elevation
 
-Sistema flat por padrão. Cards não têm sombra — a separação vem do contraste Fog/Paper (Regra dos Dois Planos) e de uma borda hairline de 1px (`ring-1 ring-foreground/10` hoje; migrar para `border border-hairline` explícito). Overlays (dialog, popover, select) são a única exceção: recebem uma sombra difusa e leve para reforçar que estão flutuando sobre o conteúdo, já que ali não há um segundo plano de fundo para criar contraste.
+Sombra suave e ambiente é o padrão em todo card, não exceção. Cards flutuam sobre o Fog Morno com uma sombra difusa e baixa; overlays (dialog, popover) recebem uma sombra um degrau mais forte, para reforçar a camada extra.
 
 ### Shadow Vocabulary
-- **overlay** (`box-shadow: 0 8px 24px -8px oklch(0 0 0 / 12%)`): dialogs, popovers, dropdowns. A única sombra do sistema.
+- **card** (`box-shadow: 0 1px 2px oklch(0 0 0 / 4%), 0 8px 24px -12px oklch(0 0 0 / 10%)`): todo card em repouso.
+- **overlay** (`box-shadow: 0 16px 40px -12px oklch(0 0 0 / 20%)`): dialogs, popovers, dropdowns, o FAB expandido.
 
 ### Named Rules
-**A Regra do Flat-Por-Padrão.** Sombra é exceção, não hábito. Ela só aparece quando um elemento literalmente se sobrepõe a outro conteúdo (overlay); cards, listas e seções no fluxo normal usam apenas hairline + Fog/Paper.
+**A Regra da Sombra Viva.** Toda superfície elevada tem sombra suave; hairline vira reforço pontual (divisores de lista, inputs), não a única linguagem de separação.
 
 ## 5. Components
 
 ### Buttons
-- **Shape:** cantos suaves (`rounded-md`, 0.5rem).
-- **Primary:** fundo Grafite, texto Fog (`primary` → `primary-foreground`), padding 6px 14px. É o único elemento "cheio" da interface — reservado para a ação principal de cada tela.
-- **Outline/Ghost:** fundo Paper ou transparente, borda hairline, texto Grafite. É o padrão para a maioria das ações (secundárias, cancelar, ações de linha).
-- **Hover / Focus:** hover escurece levemente (`/80` de opacidade); foco usa ring de 3px em `hairline` — nunca cor.
+- **Shape:** `rounded-md` (0.5rem).
+- **Primary:** fundo Laranja Vital, texto branco. Reservado pra a ação principal de cada tela e pro FAB.
+- **Outline/Ghost:** fundo Paper ou transparente, texto Ink.
 
 ### Chips / Badges
-- **Style:** fundo `muted` (cinza claro) com texto Grafite, cantos totalmente arredondados (`rounded-full`). Sem variantes coloridas por categoria — status se lê pelo texto, não pela cor do chip.
+- **Style:** fundo `muted`, texto Ink, `rounded-full`. Badges de progresso/streak usam o laranja.
 
 ### Cards / Containers
-- **Corner Style:** `rounded-xl` (0.875rem).
-- **Background:** sempre Paper, nunca Fog (Regra dos Dois Planos).
-- **Shadow Strategy:** nenhuma; ver Elevation. Separação vem da borda hairline.
-- **Border:** 1px hairline, sempre visível (não só no hover).
-- **Internal Padding:** 16px (`spacing.md`); cards compactos usam 12px.
+- **Corner Style:** `rounded-2xl` (1.125rem) nos cards principais.
+- **Background:** sempre Paper.
+- **Shadow Strategy:** sombra suave por padrão (ver Elevation).
+- **Internal Padding:** 16-20px.
 
-### Inputs / Fields
-- **Style:** borda hairline, fundo transparente sobre Paper, `rounded-md`.
-- **Focus:** borda muda para Grafite + ring de 3px em `hairline` — sem cor de destaque.
-- **Error / Disabled:** erro se comunica por texto abaixo do campo e peso 600, não por borda vermelha (Regra do Zero Acento); disabled reduz opacidade para 50%.
+### Day Strip
+- Tira horizontal com os dias da semana, dia atual destacado com o laranja. Contexto visual, não decoração — reforça "hoje" como o pulso da tela.
 
-### Navigation (Tabs)
-- **Style:** lista de tabs com fundo `muted`, tab ativa ganha fundo Paper + texto Grafite; inativas ficam em texto `muted-foreground`. Sem sublinhado colorido, sem indicador animado com cor de marca.
+### Segmented Control
+- Pílula com fundo `muted`, opção ativa em Paper com sombra sutil ou preenchida em Ink/Laranja conforme o contexto. Usado para filtrar estado (a fazer / concluído).
+
+### Navigation
+- Barra inferior flutuante em pílula (não fixa borda-a-borda), com os itens principais e um FAB circular de ação rápida em Laranja Vital, levemente elevado acima da pílula.
 
 ## 6. Do's and Don'ts
 
 ### Do:
-- **Do** usar peso tipográfico (400→600) e tamanho para criar hierarquia, nunca cor.
-- **Do** manter dois planos de cinza distintos entre canvas e superfície (Fog/Paper claro, Canvas/Superfície escuro).
-- **Do** usar Geist Mono só para valores numéricos isolados (peso, horas, dose) — não para rótulos ou prosa.
-- **Do** tratar dark mode como tema de primeira classe, com seus próprios valores curados (não um filtro invertido).
-- **Do** usar bordas hairline de 1px como principal sinal de separação entre blocos.
+- **Do** usar o laranja com intenção: ação primária, "hoje", progresso — nunca como preenchimento de fundo.
+- **Do** dar sombra suave a todo card em repouso; hairline só reforça divisores pontuais.
+- **Do** usar emoji como ícone de categoria (sono, treino, alimentação, medicação), sempre no mesmo tamanho e posição.
+- **Do** manter Geist Mono para números isolados.
+- **Do** tratar dark mode como tema de primeira classe.
 
 ### Don't:
-- **Don't** introduzir cor de marca em nenhum estado, incluindo erro, sucesso ou alerta (Regra do Zero Acento).
-- **Don't** usar paleta pastel, ilustrações fofas, emojis decorativos ou badges de conquista brilhantes — isso é clichê de "app de dieta" que o produto rejeita explicitamente.
-- **Don't** aplicar sombra em cards ou listas no fluxo normal — sombra é reservada a overlays (Regra do Flat-Por-Padrão).
-- **Don't** usar `border-left`/`border-right` coloridos como acento decorativo em cards ou listas.
-- **Don't** usar hero-metric com gradiente, grades de cards idênticos, ou eyebrows numerados (01/02/03) — clichês de dashboard SaaS.
-- **Don't** colocar branco puro atrás de branco puro; sempre diferenciar canvas de superfície.
+- **Don't** espalhar o laranja por mais de ~15% de uma tela.
+- **Don't** usar emoji como decoração de frase corrida — só como ícone de categoria.
+- **Don't** usar paleta pastel aleatória, ilustrações fofas ou badges de conquista brilhantes tipo app de dieta genérico.
+- **Don't** usar `border-left`/`border-right` coloridos como acento decorativo.
+- **Don't** usar hero-metric com gradiente, grades de cards idênticos, ou eyebrows numerados (01/02/03).
+- **Don't** colocar branco puro atrás de branco puro sem sombra os separando.

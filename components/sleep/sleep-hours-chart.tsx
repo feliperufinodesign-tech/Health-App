@@ -20,9 +20,11 @@ export function SleepHoursChart({ logs }: { logs: SleepLog[] }) {
   const avg = hours.length > 0 ? hours.reduce((a, b) => a + b, 0) / hours.length : null;
 
   return (
-    <div className="flex flex-col gap-3 rounded-xl border bg-card p-4">
+    <div className="flex flex-col gap-3 rounded-2xl bg-card p-4 shadow-card">
       <div className="flex items-baseline justify-between">
-        <p className="text-sm font-semibold">Horas de sono</p>
+        <p className="flex items-center gap-1.5 text-sm font-semibold">
+          <span aria-hidden>😴</span> Horas de sono
+        </p>
         <p className="font-mono text-sm text-muted-foreground">
           {avg != null ? `média ${avg.toFixed(1)}h` : "sem dados"}
         </p>

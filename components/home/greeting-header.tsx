@@ -18,13 +18,13 @@ export function GreetingHeader({ email }: { email: string | undefined }) {
   });
 
   return (
-    <header className="flex items-start justify-between">
+    <header className="flex items-start justify-between gap-4">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-balance">
+        <p className="text-sm text-muted-foreground capitalize">{dataFormatada}</p>
+        <h1 className="mt-0.5 text-[1.75rem] leading-tight font-semibold tracking-tight text-balance">
           {greeting}
           {nome ? `, ${nome}` : ""}
         </h1>
-        <p className="text-sm text-muted-foreground capitalize">{dataFormatada}</p>
       </div>
       <ProfileMenu email={email} />
     </header>

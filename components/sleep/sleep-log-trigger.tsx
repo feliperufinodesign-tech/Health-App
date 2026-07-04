@@ -17,7 +17,7 @@ export function SleepLogTrigger({
 
   return (
     <>
-      <Button variant="outline" onClick={() => setOpen(true)}>
+      <Button onClick={() => setOpen(true)} className="w-full">
         Registrar sono de hoje
       </Button>
       <SleepLogDialog data={data} open={open} onOpenChange={setOpen} />

@@ -117,7 +117,7 @@ create table med_logs (
 
 -- PESO CORPORAL ---------------------------------------------------
 
-create table body_weight_logs (
+create table if not exists body_weight_logs (
   id          uuid primary key default gen_random_uuid(),
   data        date not null unique,
   peso_kg     numeric not null,
@@ -126,7 +126,7 @@ create table body_weight_logs (
 
 -- IA ------------------------------------------------------------
 
-create table daily_insights (
+create table if not exists daily_insights (
   id         uuid primary key default gen_random_uuid(),
   data       date not null unique,
   score      int not null,          -- 0 a 100

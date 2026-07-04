@@ -13,7 +13,10 @@ export async function getWeightLogs(days: number): Promise<BodyWeightLog[]> {
     .gte("data", daysAgoISO(days))
     .order("data", { ascending: true });
 
-  if (error) throw new Error(error.message);
+  if (error) {
+    console.error("getWeightLogs:", error.message);
+    return [];
+  }
   return data ?? [];
 }
 
@@ -26,7 +29,10 @@ export async function getLatestWeightLog(): Promise<BodyWeightLog | null> {
     .limit(1)
     .maybeSingle();
 
-  if (error) throw new Error(error.message);
+  if (error) {
+    console.error("getLatestWeightLog:", error.message);
+    return null;
+  }
   return data;
 }
 

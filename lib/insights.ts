@@ -159,7 +159,10 @@ export async function getOrCreateDailyInsight(
     .eq("data", data)
     .maybeSingle();
 
-  if (readError) throw new Error(readError.message);
+  if (readError) {
+    console.error("getOrCreateDailyInsight (read):", readError.message);
+    return fallbackInsight(score);
+  }
   if (existing) return existing.frase;
 
   let frase: string;
@@ -185,6 +188,8 @@ export async function getOrCreateDailyInsight(
     .from("daily_insights")
     .upsert({ data, score, frase }, { onConflict: "data" });
 
-  if (writeError) throw new Error(writeError.message);
+  if (writeError) {
+    console.error("getOrCreateDailyInsight (write):", writeError.message);
+  }
   return frase;
 }

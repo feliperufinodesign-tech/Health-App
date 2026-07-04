@@ -1,12 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Geist,
-  Geist_Mono,
-  Lexend,
-  DM_Sans,
-  Hanken_Grotesk,
-  Fraunces,
-} from "next/font/google";
+import { Geist, Geist_Mono, Lexend, Fraunces } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,27 +12,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// UI Assistente-AI (Figma) type system.
-// Lexend + DM Sans are the real families. Aeonik → Hanken Grotesk (a close
-// geometric grotesque). Copernicus (serif) → Fraunces (warm modern serif).
+// Primary UI font (Figma UI Assistente-AI): Lexend.
 const lexend = Lexend({
   variable: "--font-lexend",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
 
-const dmSans = DM_Sans({
-  variable: "--font-dmsans",
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-});
-
-const aeonik = Hanken_Grotesk({
-  variable: "--font-aeonik",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-});
-
+// Serif accent (Copernicus in Figma) → Fraunces as a close warm modern serif.
 const copernicus = Fraunces({
   variable: "--font-copernicus",
   subsets: ["latin"],
@@ -60,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${lexend.variable} ${dmSans.variable} ${aeonik.variable} ${copernicus.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${lexend.variable} ${copernicus.variable} antialiased`}
       >
         {children}
       </body>

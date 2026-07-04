@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { upsertSessionSet } from "@/lib/workout";
+import { removeSessionSet, upsertSessionSet } from "@/lib/workout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { SessionSet } from "@/lib/types";
@@ -43,6 +43,15 @@ export function SessionSetRow({ set }: { set: SessionSet }) {
         }
       >
         {set.concluido ? "Feito" : "Marcar"}
+      </Button>
+      <Button
+        type="button"
+        size="sm"
+        variant="ghost"
+        disabled={pending}
+        onClick={() => startTransition(() => removeSessionSet(set.id))}
+      >
+        ✕
       </Button>
     </div>
   );

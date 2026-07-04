@@ -19,6 +19,19 @@ export function todayDiaSemana(): DiaSemana {
   return DIAS_SEMANA[new Date().getDay()];
 }
 
+export function diaSemanaForDate(dataISO: string): DiaSemana {
+  const [year, month, day] = dataISO.split("-").map(Number);
+  return DIAS_SEMANA[new Date(year, month - 1, day).getDay()];
+}
+
+export function lastNDaysISO(days: number): string[] {
+  const dates: string[] = [];
+  for (let i = days - 1; i >= 0; i--) {
+    dates.push(daysAgoISO(i));
+  }
+  return dates;
+}
+
 export function nowHHMM(): string {
   const now = new Date();
   return `${String(now.getHours()).padStart(2, "0")}:${String(

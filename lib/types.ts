@@ -35,6 +35,22 @@ export type MealItem = {
 export type MealItemWithFood = MealItem & { food: Food };
 export type MealLogWithItems = MealLog & { items: MealItemWithFood[] };
 
+export type Recipe = {
+  id: string;
+  nome: string;
+  ativo: boolean;
+};
+
+export type RecipeItem = {
+  id: string;
+  recipe_id: string;
+  food_id: string;
+  quantidade: number;
+};
+
+export type RecipeItemWithFood = RecipeItem & { food: Food };
+export type RecipeWithItems = Recipe & { items: RecipeItemWithFood[] };
+
 export type WorkoutPlan = {
   id: string;
   nome: string;
@@ -134,4 +150,19 @@ export type DailyGoal = {
   kcal_meta: number;
   proteina_meta: number;
   atualizado_em: string;
+};
+
+export type BodyWeightLog = {
+  id: string;
+  data: string;
+  peso_kg: number;
+  criado_em: string;
+};
+
+export type DailyInsight = {
+  id: string;
+  data: string;
+  score: number;
+  frase: string;
+  criado_em: string;
 };

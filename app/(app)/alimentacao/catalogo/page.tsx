@@ -1,6 +1,7 @@
 import { listFoods } from "@/lib/food";
 import { FoodForm } from "@/components/food/food-form";
 import { FoodTable } from "@/components/food/food-table";
+import { AiFoodImport } from "@/components/food/ai-food-import";
 import { LinkButton } from "@/components/ui/link-button";
 import {
   Card,
@@ -21,6 +22,7 @@ export default async function CatalogoPage() {
         </LinkButton>
       </div>
 
+      <AiFoodImport />
       <FoodForm />
 
       <Card>

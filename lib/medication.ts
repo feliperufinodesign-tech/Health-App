@@ -95,6 +95,53 @@ export async function checkAndRegisterMedTaken(
   return { logged: false, needsChoice: true };
 }
 
+export async function registerMedicationTakenByName(
+  nomeMedicamento: string,
+  data: string,
+  horarioInformado?: string,
+): Promise<string> {
+  const supabase = await createClient();
+  const { data: meds, error } = await supabase
+    .from("medications")
+    .select("*")
+    .eq("ativo", true);
+  if (error) throw new Error(error.message);
+
+  const alvo = nomeMedicamento.toLowerCase();
+  const med = (meds as Medication[] | null)?.find(
+    (m) => m.nome.toLowerCase().includes(alvo) || alvo.includes(m.nome.toLowerCase()),
+  );
+  if (!med) {
+    return `Não encontrei um medicamento chamado "${nomeMedicamento}" cadastrado. Cadastre em Medicação primeiro.`;
+  }
+
+  const { data: logs, error: logsError } = await supabase
+    .from("med_logs")
+    .select("horario_previsto")
+    .eq("medication_id", med.id)
+    .eq("data", data);
+  if (logsError) throw new Error(logsError.message);
+
+  const loggedTimes = new Set((logs ?? []).map((l) => l.horario_previsto.slice(0, 5)));
+  const pending = med.horarios.filter((h) => !loggedTimes.has(h.slice(0, 5)));
+
+  if (pending.length === 0) {
+    return `Todas as doses de ${med.nome} hoje já foram registradas.`;
+  }
+
+  const reference = horarioInformado ?? nowHHMM();
+  const horario = pending.reduce((closest, h) =>
+    minutesBetween(h, reference) < minutesBetween(closest, reference) ? h : closest,
+  );
+
+  const result = await checkAndRegisterMedTaken(med.id, data, horario);
+  if (result.needsChoice) {
+    await confirmMedTaken(med.id, data, horario, "agora");
+    return `${med.nome} (${horario}) registrado como tomado agora — fora da janela de ±90min do horário previsto, então marquei como atrasado. Se na verdade foi no horário certo, corrija em Medicação.`;
+  }
+  return `${med.nome} (${horario}) registrado como tomado no horário.`;
+}
+
 export async function confirmMedTaken(
   medicationId: string,
   data: string,

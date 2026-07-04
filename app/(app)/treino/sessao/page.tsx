@@ -1,6 +1,7 @@
 import { getSessionByDate } from "@/lib/workout";
 import { todayISO } from "@/lib/date";
 import { SessionSetRow } from "@/components/workout/session-set-row";
+import { AddExtraSetButton } from "@/components/workout/add-extra-set-button";
 import { CompleteSessionButton } from "@/components/workout/complete-session-button";
 import { LinkButton } from "@/components/ui/link-button";
 import {
@@ -53,6 +54,11 @@ export default async function SessaoPage() {
               .map((set) => (
                 <SessionSetRow key={set.id} set={set} />
               ))}
+            <AddExtraSetButton
+              sessionId={session.id}
+              planExerciseId={sets[0]?.plan_exercise_id ?? null}
+              nomeExercicio={nome}
+            />
           </CardContent>
         </Card>
       ))}

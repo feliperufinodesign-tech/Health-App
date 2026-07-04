@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getPlanWithDays } from "@/lib/workout";
 import { PlanDayEditor, DIA_LABEL } from "@/components/workout/plan-day-editor";
 import { ExerciseForm } from "@/components/workout/exercise-form";
+import { RemoveExerciseButton } from "@/components/workout/remove-exercise-button";
 import { TogglePlanActive } from "@/components/workout/toggle-plan-active";
 import { LinkButton } from "@/components/ui/link-button";
 import {
@@ -55,12 +56,15 @@ export default async function PlanDetailPage({
             {day.exercises.length > 0 ? (
               <ul className="flex flex-col gap-1 text-sm">
                 {day.exercises.map((ex) => (
-                  <li key={ex.id} className="flex justify-between">
+                  <li key={ex.id} className="flex items-center justify-between">
                     <span>{ex.nome}</span>
-                    <span className="text-muted-foreground">
-                      {ex.series_alvo ?? "-"}x{ex.reps_alvo ?? "-"}
-                      {ex.carga_alvo ? ` @ ${ex.carga_alvo}kg` : ""}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground">
+                        {ex.series_alvo ?? "-"}x{ex.reps_alvo ?? "-"}
+                        {ex.carga_alvo ? ` @ ${ex.carga_alvo}kg` : ""}
+                      </span>
+                      <RemoveExerciseButton planExerciseId={ex.id} planId={plan.id} />
+                    </div>
                   </li>
                 ))}
               </ul>

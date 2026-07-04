@@ -86,18 +86,12 @@ export async function getOrCreateMealLog(
   return created.id;
 }
 
-export type AddMealItemState = { error: string | null };
-
-export async function addMealItem(
-  _prevState: AddMealItemState,
-  formData: FormData,
-): Promise<AddMealItemState> {
+export async function addFoodToMealLog(
+  mealLogId: string,
+  foodId: string,
+  quantidade: number,
+) {
   const supabase = await createClient();
-
-  const data = formData.get("data") as string;
-  const refeicao = formData.get("refeicao") as Refeicao;
-  const foodId = formData.get("food_id") as string;
-  const quantidade = Number(formData.get("quantidade"));
 
   const { data: food, error: foodError } = await supabase
     .from("foods")
@@ -105,9 +99,8 @@ export async function addMealItem(
     .eq("id", foodId)
     .single();
 
-  if (foodError) return { error: foodError.message };
+  if (foodError) throw new Error(foodError.message);
 
-  const mealLogId = await getOrCreateMealLog(data, refeicao);
   const fator = quantidade / (food as Food).base_qtd;
 
   const { error } = await supabase.from("meal_items").insert({
@@ -120,7 +113,26 @@ export async function addMealItem(
     gord_calc: fator * food.gordura_g,
   });
 
-  if (error) return { error: error.message };
+  if (error) throw new Error(error.message);
+}
+
+export type AddMealItemState = { error: string | null };
+
+export async function addMealItem(
+  _prevState: AddMealItemState,
+  formData: FormData,
+): Promise<AddMealItemState> {
+  const data = formData.get("data") as string;
+  const refeicao = formData.get("refeicao") as Refeicao;
+  const foodId = formData.get("food_id") as string;
+  const quantidade = Number(formData.get("quantidade"));
+
+  try {
+    const mealLogId = await getOrCreateMealLog(data, refeicao);
+    await addFoodToMealLog(mealLogId, foodId, quantidade);
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Erro ao adicionar item" };
+  }
 
   revalidatePath("/alimentacao");
   revalidatePath("/hoje");
@@ -137,6 +149,29 @@ export async function removeMealItem(mealItemId: string) {
   if (error) throw new Error(error.message);
   revalidatePath("/alimentacao");
   revalidatePath("/hoje");
+}
+
+export type NewFoodInput = {
+  nome: string;
+  unidade: Unidade;
+  base_qtd: number;
+  kcal: number;
+  proteina_g: number;
+  carbo_g: number;
+  gordura_g: number;
+};
+
+export async function bulkCreateFoods(items: NewFoodInput[]): Promise<Food[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("foods")
+    .insert(items)
+    .select("*");
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/alimentacao/catalogo");
+  revalidatePath("/alimentacao");
+  return data ?? [];
 }
 
 export type DayTotals = { kcal: number; proteina: number; carbo: number; gordura: number };

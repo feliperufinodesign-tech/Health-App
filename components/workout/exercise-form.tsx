@@ -19,7 +19,7 @@ export function ExerciseForm({
   );
 
   return (
-    <form action={formAction} className="grid grid-cols-2 gap-2 sm:grid-cols-6">
+    <form action={formAction} className="grid grid-cols-2 gap-2 sm:grid-cols-5">
       <input type="hidden" name="plan_id" value={planId} />
       <input type="hidden" name="plan_day_id" value={planDayId} />
 
@@ -29,22 +29,18 @@ export function ExerciseForm({
       </div>
       <div className="flex flex-col gap-1">
         <Label className="text-xs">Séries</Label>
-        <Input name="series_alvo" type="number" min={1} />
+        <Input name="series_alvo" type="number" min={1} placeholder="4" />
       </div>
       <div className="flex flex-col gap-1">
         <Label className="text-xs">Reps</Label>
-        <Input name="reps_alvo" placeholder="8-12" />
+        <Input name="reps_alvo" placeholder="6-8" />
       </div>
       <div className="flex flex-col gap-1">
-        <Label className="text-xs">Carga</Label>
-        <Input name="carga_alvo" type="number" step="0.5" />
-      </div>
-      <div className="flex flex-col gap-1">
-        <Label className="text-xs">Ordem</Label>
-        <Input name="ordem" type="number" min={1} />
+        <Label className="text-xs">Carga inicial</Label>
+        <Input name="carga_alvo" type="number" step="0.5" placeholder="opcional" />
       </div>
 
-      <div className="col-span-2 sm:col-span-6">
+      <div className="col-span-2 sm:col-span-5">
         <Button type="submit" size="sm" variant="outline" disabled={pending}>
           {pending ? "Adicionando..." : "Adicionar exercício"}
         </Button>

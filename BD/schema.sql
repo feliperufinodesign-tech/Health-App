@@ -115,7 +115,24 @@ create table med_logs (
   observacao        text
 );
 
+-- PESO CORPORAL ---------------------------------------------------
+
+create table body_weight_logs (
+  id          uuid primary key default gen_random_uuid(),
+  data        date not null unique,
+  peso_kg     numeric not null,
+  criado_em   timestamptz default now()
+);
+
 -- IA ------------------------------------------------------------
+
+create table daily_insights (
+  id         uuid primary key default gen_random_uuid(),
+  data       date not null unique,
+  score      int not null,          -- 0 a 100
+  frase      text not null,
+  criado_em  timestamptz default now()
+);
 
 create table ai_reports (
   id             uuid primary key default gen_random_uuid(),

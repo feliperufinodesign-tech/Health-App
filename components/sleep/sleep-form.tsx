@@ -1,31 +1,38 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { submitSleepLog, type SleepFormState } from "@/lib/sleep";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
-export function SleepForm({ data }: { data: string }) {
+export function SleepForm({
+  data,
+  onSuccess,
+}: {
+  data: string;
+  onSuccess?: () => void;
+}) {
   const [state, formAction, pending] = useActionState<SleepFormState, FormData>(
     submitSleepLog,
     { error: null },
   );
+  const submittedOnce = useRef(false);
+
+  useEffect(() => {
+    if (!submittedOnce.current) return;
+    if (!pending && !state.error) onSuccess?.();
+  }, [pending, state.error, onSuccess]);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Como foi seu sono?</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form action={formAction} className="flex flex-col gap-4">
+        <form
+          action={(formData) => {
+            submittedOnce.current = true;
+            formAction(formData);
+          }}
+          className="flex flex-col gap-4"
+        >
           <input type="hidden" name="data" value={data} />
 
           <div className="grid grid-cols-2 gap-4">
@@ -98,7 +105,5 @@ export function SleepForm({ data }: { data: string }) {
             {pending ? "Salvando..." : "Salvar sono"}
           </Button>
         </form>
-      </CardContent>
-    </Card>
   );
 }

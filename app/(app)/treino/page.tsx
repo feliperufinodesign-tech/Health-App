@@ -22,9 +22,14 @@ export default async function TreinoPage() {
     <main className="flex flex-col gap-4 p-4">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Treino</h1>
-        <LinkButton href="/treino/planos" variant="outline" size="sm">
-          Planos
-        </LinkButton>
+        <div className="flex gap-2">
+          <LinkButton href="/treino/progresso" variant="outline" size="sm">
+            Progresso
+          </LinkButton>
+          <LinkButton href="/treino/planos" variant="outline" size="sm">
+            Planos
+          </LinkButton>
+        </div>
       </div>
 
       <Card>

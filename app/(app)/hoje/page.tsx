@@ -11,13 +11,24 @@ import {
   getOrCreateDailyInsight,
 } from "@/lib/insights";
 import { todayISO, todayDiaSemana, nowHHMM } from "@/lib/date";
+import type { SleepLog } from "@/lib/types";
 import { GreetingHeader } from "@/components/home/greeting-header";
 import { DayStrip } from "@/components/home/day-strip";
 import { InsightBanner } from "@/components/home/insight-banner";
 import { EnergyCard } from "@/components/home/energy-card";
-import { SleepTrendCard } from "@/components/home/sleep-trend-card";
+import { MetricsGrid, type HomeMetrics } from "@/components/home/metrics-grid";
 import { WeightTrendCard } from "@/components/home/weight-trend-card";
-import { PendingChecklist } from "@/components/home/pending-checklist";
+import { SleepPrompt } from "@/components/home/sleep-prompt";
+import { Section } from "@/components/ui/section";
+
+function hoursSlept(log: SleepLog): number | null {
+  if (!log.hora_dormir || !log.hora_acordar) return null;
+  const [h1, m1] = log.hora_dormir.slice(0, 5).split(":").map(Number);
+  const [h2, m2] = log.hora_acordar.slice(0, 5).split(":").map(Number);
+  let diff = h2 * 60 + m2 - (h1 * 60 + m1);
+  if (diff <= 0) diff += 24 * 60;
+  return Math.round((diff / 60) * 10) / 10;
+}
 
 export default async function HojePage() {
   const supabase = await createClient();
@@ -46,6 +57,46 @@ export default async function HojePage() {
   const medPendingCount = medSlots.filter(
     (s) => !s.log && s.horario_previsto <= nowHHMM(),
   ).length;
+  const medTaken = medSlots.filter((s) => s.log).length;
+
+  const hours = sleepLog ? hoursSlept(sleepLog) : null;
+  const kcal = Math.round(totals.kcal);
+  const totalSets = planDay
+    ? planDay.exercises.reduce((s, e) => s + (e.series_alvo ?? 0), 0)
+    : 0;
+  const doneSets = session ? session.sets.filter((s) => s.concluido).length : 0;
+
+  const metrics: HomeMetrics = {
+    sono: {
+      value: hours != null ? hours.toFixed(1) : "—",
+      unit: hours != null ? "h" : undefined,
+      detail: sleepLog ? `disposição ${sleepLog.disposicao ?? "—"}/5` : "toque para registrar",
+    },
+    comida: {
+      value: kcal > 0 ? String(kcal) : "—",
+      unit: kcal > 0 ? "kcal" : undefined,
+      detail: goal
+        ? `${Math.round((totals.kcal / goal.kcal_meta) * 100)}% da meta`
+        : "definir meta",
+    },
+    treino: {
+      value: planDay ? `${doneSets}/${totalSets}` : "—",
+      detail: planDay
+        ? session?.concluido
+          ? "concluído"
+          : (planDay.nome ?? "a fazer")
+        : "descanso",
+    },
+    remedio: {
+      value: medSlots.length > 0 ? `${medTaken}/${medSlots.length}` : "—",
+      detail:
+        medSlots.length === 0
+          ? "nenhuma ativa"
+          : medPendingCount === 0
+            ? "em dia"
+            : `${medPendingCount} pendente`,
+    },
+  };
 
   const contextSummary = [
     sleepLog
@@ -58,14 +109,11 @@ export default async function HojePage() {
       ? `Treino: dia de treino, ${session?.concluido ? "concluído" : "ainda não concluído"}.`
       : "Treino: dia de descanso.",
     medSlots.length > 0
-      ? `Medicação: ${medSlots.filter((s) => s.log).length} de ${medSlots.length} doses registradas.`
+      ? `Medicação: ${medTaken} de ${medSlots.length} doses registradas.`
       : "Medicação: nenhuma ativa.",
   ].join(" ");
 
   const frase = await getOrCreateDailyInsight(data, score, contextSummary);
-
-  const mealsLogged = totals.kcal > 0;
-  const workoutDone = Boolean(session?.concluido);
 
   return (
     <main className="flex flex-col gap-8 p-5 pb-8">
@@ -75,31 +123,19 @@ export default async function HojePage() {
         <DayStrip />
       </div>
 
-      <div
-        className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500 motion-safe:[animation-delay:80ms] motion-safe:fill-mode-both flex flex-col gap-3"
-      >
+      <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500 motion-safe:[animation-delay:80ms] motion-safe:fill-mode-both flex flex-col gap-3">
         <EnergyCard score={score} history={energyHistory} />
-
-        <div className="grid grid-cols-2 gap-3">
-          <SleepTrendCard logs={sleepHistory} />
-          <WeightTrendCard data={data} logs={weightHistory} />
-        </div>
+        <MetricsGrid metrics={metrics} />
       </div>
 
-      <section
-        className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500 motion-safe:[animation-delay:160ms] motion-safe:fill-mode-both flex flex-col gap-3"
+      <Section
+        title="Peso"
+        className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500 motion-safe:[animation-delay:160ms] motion-safe:fill-mode-both"
       >
-        <h2 className="text-base font-semibold tracking-tight">Pendências de hoje</h2>
-        <PendingChecklist
-          data={data}
-          hasSleepLog={Boolean(sleepLog)}
-          mealsLogged={mealsLogged}
-          isTrainingDay={Boolean(planDay)}
-          workoutDone={workoutDone}
-          medPendingCount={medPendingCount}
-          medTotalCount={medSlots.length}
-        />
-      </section>
+        <WeightTrendCard data={data} logs={weightHistory} />
+      </Section>
+
+      <SleepPrompt data={data} hasSleepLog={Boolean(sleepLog)} />
     </main>
   );
 }

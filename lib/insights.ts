@@ -14,6 +14,7 @@ import type {
   SessionSet,
   MedicationSlot,
 } from "@/lib/types";
+import type { Domain } from "@/lib/domains";
 
 function hoursSlept(sleepLog: SleepLog | null): number | null {
   if (!sleepLog?.hora_dormir || !sleepLog?.hora_acordar) return null;
@@ -33,49 +34,78 @@ type EnergyInputs = {
   medSlots: MedicationSlot[];
 };
 
-export function computeEnergyScore(input: EnergyInputs): number {
+export type EnergyContributor = {
+  domain: Exclude<Domain, "energia">;
+  score: number;
+  max: number;
+  detail: string;
+};
+
+export function computeEnergyBreakdown(input: EnergyInputs): EnergyContributor[] {
   const { sleepLog, totals, goal, planDay, session, medSlots } = input;
 
   let sleepScore: number;
+  let sleepDetail: string;
   if (sleepLog) {
     const dispScore = ((sleepLog.disposicao ?? 3) / 5) * 20;
     const hours = hoursSlept(sleepLog);
     const hoursScore = hours != null ? 20 * Math.max(0, 1 - Math.abs(hours - 8) / 4) : 10;
     sleepScore = dispScore + hoursScore;
+    sleepDetail = hours != null ? `${hours.toFixed(1)}h · disposição ${sleepLog.disposicao ?? "—"}/5` : "registrado";
   } else {
     sleepScore = 20;
+    sleepDetail = "não registrado";
   }
 
   let foodScore: number;
+  let foodDetail: string;
   if (goal && totals.kcal > 0) {
     const ratio = totals.kcal / goal.kcal_meta;
     foodScore = 25 * Math.max(0, 1 - Math.abs(1 - ratio));
+    foodDetail = `${Math.round(totals.kcal)} / ${goal.kcal_meta} kcal`;
   } else {
     foodScore = 15;
+    foodDetail = totals.kcal > 0 ? `${Math.round(totals.kcal)} kcal · sem meta` : "sem registro";
   }
 
   let workoutScore: number;
+  let workoutDetail: string;
   if (!planDay) {
     workoutScore = 20;
+    workoutDetail = "dia de descanso";
   } else if (session?.concluido) {
     workoutScore = 20;
+    workoutDetail = "concluído";
   } else if (session) {
     workoutScore = 10;
+    workoutDetail = "em andamento";
   } else {
     workoutScore = 12;
+    workoutDetail = "não iniciado";
   }
 
   let medScore: number;
+  let medDetail: string;
   if (medSlots.length === 0) {
     medScore = 15;
+    medDetail = "nenhuma ativa";
   } else {
     const taken = medSlots.filter((s) => s.log).length;
     medScore = 15 * (taken / medSlots.length);
+    medDetail = `${taken} de ${medSlots.length} doses`;
   }
 
-  return Math.round(
-    Math.min(100, Math.max(0, sleepScore + foodScore + workoutScore + medScore)),
-  );
+  return [
+    { domain: "sono", score: Math.round(sleepScore), max: 40, detail: sleepDetail },
+    { domain: "comida", score: Math.round(foodScore), max: 25, detail: foodDetail },
+    { domain: "treino", score: Math.round(workoutScore), max: 20, detail: workoutDetail },
+    { domain: "remedio", score: Math.round(medScore), max: 15, detail: medDetail },
+  ];
+}
+
+export function computeEnergyScore(input: EnergyInputs): number {
+  const total = computeEnergyBreakdown(input).reduce((sum, c) => sum + c.score, 0);
+  return Math.round(Math.min(100, Math.max(0, total)));
 }
 
 export async function getEnergyScoreForDate(data: string, goal: DailyGoal | null) {

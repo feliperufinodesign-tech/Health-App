@@ -33,6 +33,7 @@ export function SleepHoursChart({ logs }: { logs: SleepLog[] }) {
         points={logs.map((l) => ({ label: dayLabel(l.data), value: hoursSlept(l) }))}
         unit="h"
         height={72}
+        barClassName="bg-sono"
       />
     </div>
   );

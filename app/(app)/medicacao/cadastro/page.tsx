@@ -13,7 +13,7 @@ export default async function CadastroMedicacaoPage() {
   const medications = await listMedications();
 
   return (
-    <main className="flex flex-col gap-4 p-4">
+    <main className="flex flex-col gap-5 p-5 pb-8">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Medicamentos</h1>
         <LinkButton href="/medicacao" variant="outline" size="sm">

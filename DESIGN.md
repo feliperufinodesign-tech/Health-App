@@ -1,14 +1,22 @@
 ---
 name: Rotina & Saúde
-description: Painel pessoal de saúde, quase inteiramente grayscale, com um único acento raro
+description: Painel pessoal de saúde — superfície neutra e calma, dado colorido (cor-como-dado, no espírito de Oura e Apple Health)
 colors:
-  primary: "oklch(0.65 0.19 45)"
-  primary-foreground: "oklch(1 0 0)"
+  ink: "oklch(0.16 0 0)"
   bg: "oklch(0.97 0.008 70)"
   surface: "oklch(1 0 0)"
   hairline: "oklch(0.9 0.006 70)"
-  ink: "oklch(0.16 0 0)"
   muted: "oklch(0.52 0.005 70)"
+  primary: "oklch(0.65 0.19 45)"
+  primary-foreground: "oklch(1 0 0)"
+  energia: "oklch(0.58 0.17 300)"
+  sono: "oklch(0.55 0.14 262)"
+  treino: "oklch(0.62 0.14 152)"
+  comida: "oklch(0.68 0.15 58)"
+  remedio: "oklch(0.62 0.1 205)"
+  protein: "oklch(0.62 0.17 20)"
+  carb: "oklch(0.72 0.14 75)"
+  fat: "oklch(0.66 0.12 250)"
   destructive: "oklch(0.58 0.19 25)"
 typography:
   display:
@@ -78,44 +86,51 @@ components:
 
 ## 1. Overview
 
-**Creative North Star: "Sinal Vital" (recalibrado — quieter pass)**
+**Creative North Star: "Sinal Vital" — superfície calma, dado vivo**
 
-Rotina & Saúde é um painel pessoal, não um formulário burocrático. A base é neutra, densa, sem ruído: ~80% branco e cinza, ~15% tinta preta (texto, botões, ícones, estados ativos), e uma única exceção de cor — o laranja — reservada a um único ponto por tela, no máximo. Uma tentativa anterior deste sistema espalhava o laranja por botões, badges, gráficos e navegação; isso lia como ruído repetido, não como sinal, e foi corrigido: **o preto agora carrega o peso que antes era do laranja.**
+Rotina & Saúde é um painel pessoal, não um formulário burocrático. A referência agora é explícita: Oura, Apple Health, apps de caloria premium. A doutrina que reconcilia "calmo" com "cheio de vida" é **cor-como-dado**: a superfície permanece neutra (canvas off-white, cartões brancos, texto em tinta preta, botões em tinta preta), e a cor entra **só nos elementos de dado** — anéis de score, arcos de progresso, chips de categoria, barras de macro. Cada área de saúde tem UMA cor própria (energia, sono, treino, alimentação, medicação), como os anéis do Apple Health. Nunca cor em botão, nunca cor preenchendo um card inteiro, nunca cor decorativa.
 
-O sistema ainda rejeita o clichê de "app de dieta" raso (paleta pastel aleatória, cards idênticos, gamificação vazia) e o clichê oposto de "SaaS cinza sem alma" — a superfície ganha elevação real (sombra suave e ambiente em todos os cards, não só em overlays), tiras de navegação horizontais, controles segmentados em pílula, e uma navegação inferior flutuante com ação rápida (FAB, agora em tinta preta). Emoji seguem como ícone de categoria (sono, treino, alimentação, medicação), nunca como decoração de frase solta.
+Isso substitui a fase anterior "quase tudo grayscale, laranja raríssimo": não havia vida suficiente para uma referência Oura/Apple. Agora há vida, mas ela é disciplinada — vem do dado, não da decoração. O sistema segue rejeitando o clichê de "app de dieta" raso (pastel aleatório, cards idênticos, gamificação vazia) e o de "SaaS cinza sem alma".
 
-Densidade continua alta (`text-sm`/`text-xs` predominam). Light e dark mode continuam recebendo o mesmo cuidado.
+Cada tela principal abre com um **anel-herói** (o score/valor daquela área) na cor do domínio, seguido de detalhamento. Densidade continua alta; light e dark mode recebem o mesmo cuidado.
 
 **Key Characteristics:**
-- Tinta preta (`foreground`) é a cor de ação: todo botão primário, badge de conclusão, indicador de nav ativo, FAB, e todo "último ponto" de gráfico (barra, linha, gauge) usam ink — não laranja.
-- Laranja (`primary`) é uma exceção deliberada e rara: hoje, é usado só no indicador de "hoje" na tira de dias da Home. Antes de adicionar um segundo uso, pergunte se um ponto de tinta preta já resolveria — geralmente resolve.
+- **Cor-como-dado**: cor aparece só em anéis, arcos, chips e barras de dado. Botões, texto e navegação ativa continuam em tinta preta.
+- **Uma cor por domínio**: energia (violeta), sono (azul), treino (verde), alimentação (laranja), medicação (turquesa); macros: proteína (vermelho), carbo (âmbar), gordura (azul). Fonte única em `lib/domains.ts`.
+- **Anel-herói por tela**: cada área abre com um `Ring` grande na cor do domínio (energia → /energia, sono → score de sono, alimentação → calorias, treino → séries, medicação → doses).
 - Canvas off-white morno (não branco puro), cartões brancos com sombra suave — nunca flat-por-padrão.
+- Botões sempre em tinta preta (`bg-foreground`); nunca coloridos.
 - Dialogs são bottom sheets no mobile (ancorados embaixo, cantos superiores arredondados), viram modal centralizado só a partir de `sm:`.
-- Emoji como ícone de categoria (sono, treino, alimentação, medicação), nunca como decoração de frase.
-- Navegação inferior flutuante em pílula com um FAB de ação rápida em tinta preta.
+- Navegação inferior flutuante em pílula, item ativo rotulado em tinta preta + FAB em tinta preta.
+- Componentes padronizados: `Section` (cabeçalho de seção), `StatTile` (métrica compacta), `MetricBar` (barra rotulada colorida), `Ring` (anel de progresso), `EmptyState` (tela/lista vazia).
 - Geist Mono reservado para leituras numéricas.
-- Telas vazias usam o componente `EmptyState` (ícone/emoji + título + descrição) — nunca uma única linha cinza solta no meio de uma tela em branco.
 
 ## 2. Colors
 
-Um canvas neutro e morno carrega a base; tinta preta faz o trabalho pesado; o laranja é a exceção rara, não a regra.
+Superfície neutra carrega a base; a cor pertence exclusivamente aos elementos de dado. Cada domínio tem uma cor; nenhuma delas toca botão, texto ou preenchimento de card.
 
-### Ink (a cor de ação)
-- **Ink** (`oklch(0.16 0 0)`): texto primário, botão/badge default, indicador ativo de navegação, FAB, checkmark de conclusão, arco do gauge de energia, última barra/ponto de qualquer gráfico de tendência. Sempre acromático — é o "preto" dos 15% pedidos, e é ele que carrega quase toda a hierarquia de ação da interface.
-
-### Primary (a exceção rara)
-- **Laranja Vital** (`oklch(0.65 0.19 45)`): reservado hoje a um único uso — o indicador de "hoje" na tira de dias da Home (`components/home/day-strip.tsx`). Não é mais o botão primário, nem o FAB, nem badges, nem gráficos. Antes de introduzir um segundo uso, confirme que tinta preta não resolveria; na dúvida, use ink.
-
-### Neutral
-- **Fog Morno** (`oklch(0.97 0.008 70)`): fundo de canvas. Off-white com leve calor, nunca branco puro.
-- **Paper** (`oklch(1 0 0)`): superfície de cards, dialogs, popovers, sempre com sombra suave por cima do Fog.
-- **Hairline** (`oklch(0.9 0.006 70)`): bordas onde a sombra sozinha não basta (divisores de lista, inputs).
+### Ink & Neutros (a superfície)
+- **Ink** (`oklch(0.16 0 0)`): texto primário, todo botão/badge/nav-ativo/FAB. Sempre acromático.
+- **Fog Morno** (`oklch(0.97 0.008 70)`): canvas. Off-white com leve calor, nunca branco puro.
+- **Paper** (`oklch(1 0 0)`): superfície de cards, dialogs, popovers, sempre com sombra suave.
+- **Hairline** (`oklch(0.9 0.006 70)`): divisores de lista, inputs.
 - **Muted** (`oklch(0.52 0.005 70)`): texto secundário, labels, ícones inativos.
 
-### Named Rules
-**A Regra do Pulso Único.** O laranja aparece no máximo em UM elemento da UI inteira (não por tela — no app inteiro), e só quando tinta preta genuinamente não comunicaria o mesmo. Fora disso, hierarquia vem de peso, espaçamento e tinta preta.
+### Domínios (a cor-como-dado)
+Usados apenas em `stroke-*` (anéis), `bg-*` (barras/arcos) e `bg-*/12` (chips de ícone). Definidos em `app/globals.css` e mapeados em `lib/domains.ts`.
+- **Energia** (`oklch(0.58 0.17 300)`, violeta): anel de readiness na Home e em `/energia`; barra de tendência de energia.
+- **Sono** (`oklch(0.55 0.14 262)`, azul): anel de score de sono, gráfico de horas.
+- **Treino** (`oklch(0.62 0.14 152)`, verde): anel de progresso de séries, índice de exercício concluído.
+- **Alimentação** (`oklch(0.68 0.15 58)`, laranja): anel de calorias.
+- **Medicação** (`oklch(0.62 0.1 205)`, turquesa): anel de doses.
+- **Macros** — proteína (`oklch(0.62 0.17 20)`), carboidrato (`oklch(0.72 0.14 75)`), gordura (`oklch(0.66 0.12 250)`): barras de composição no card de nutrição.
 
-**A Regra dos Dois Planos.** Canvas (Fog Morno) e superfície (Paper) continuam sendo dois degraus distintos; a separação é reforçada por sombra suave, não só por contraste de cinza.
+### Named Rules
+**A Regra Cor-como-Dado.** Cor só existe onde há dado: anel, arco, chip, barra. Se você está prestes a colorir um botão, um fundo de card ou um texto, pare — use tinta preta. A vida do sistema vem dos dados coloridos sobre uma superfície calma, exatamente como Oura e Apple Health.
+
+**A Regra de Um Domínio, Uma Cor.** Cada área de saúde tem exatamente uma cor, sempre a mesma, vinda de `lib/domains.ts`. Nunca improvise um tom novo nem reaproveite a cor de outro domínio.
+
+**A Regra dos Dois Planos.** Canvas (Fog Morno) e superfície (Paper) são dois degraus distintos, reforçados por sombra suave, não só por contraste de cinza.
 
 ## 3. Typography
 
@@ -150,21 +165,32 @@ Sombra suave e ambiente é o padrão em todo card, não exceção. Cards flutuam
 - **Outline/Ghost:** fundo Paper ou transparente, texto Ink.
 - **Laranja:** nenhum botão usa laranja. Se um botão parece precisar de destaque extra além do default, o problema é hierarquia da tela, não a cor do botão.
 
+### Rings (anel-herói e mini-anéis)
+- `components/ui/ring.tsx`: anel de progresso circular. `progressClassName` recebe a cor do domínio (`stroke-energia`, `stroke-sono`, …); trilha em `stroke-muted`.
+- **Anel-herói** (120–170px): abre cada tela de área com o score/valor central em Geist Mono. Home/`/energia` → energia; Sono → score de sono; Alimentação → calorias; Treino → séries; Medicação → doses.
+- **Mini-anel** (56–96px): dentro de cards de resumo e tiles.
+
+### Stat Tiles & Metric Bars
+- `StatTile` (`components/ui/stat-tile.tsx`): métrica compacta com chip de emoji tingido (`bg-<domain>/12`), valor grande em mono, label discreta, chevron quando é link. Usado no grid 2×2 da Home.
+- `MetricBar` (`components/ui/metric-bar.tsx`): barra rotulada com preenchimento na cor do domínio/macro. Usada em breakdowns (contribuintes de energia, split de macros).
+- `Section` (`components/ui/section.tsx`): cabeçalho de seção padrão (título + ação opcional). Toda seção de tela usa este componente.
+
 ### Chips / Badges
-- **Style:** fundo `muted`, texto Ink, `rounded-full`. O variant `default` (badge de destaque/conclusão) usa Ink, não laranja.
+- **Style:** fundo `muted`, texto Ink, `rounded-full`. O variant `default` usa Ink, não cor de domínio.
+- **Chip de categoria:** círculo com fundo `bg-<domain>/12` e emoji do domínio — a única forma de cor de domínio fora de anéis/barras.
 
 ### Cards / Containers
-- **Corner Style:** `rounded-2xl` (1.125rem) nos cards principais.
+- **Corner Style:** `rounded-2xl` (1.125rem) em cards de lista; `rounded-3xl` nos cards-herói com anel.
 - **Background:** sempre Paper.
 - **Shadow Strategy:** sombra suave por padrão (ver Elevation).
-- **Internal Padding:** 16-20px.
-- Nunca aninhar Card dentro de Card. Prefira um único container `rounded-2xl bg-card shadow-card` com linhas internas separadas por `divide-y divide-border` (ver `PendingChecklist`, `FoodCatalogList`, `MealLogList`) a empilhar cards menores dentro de um maior.
+- **Internal Padding:** 16px em tiles/listas, 24px (`p-6`) nos cards-herói.
+- Nunca aninhar Card dentro de Card. Prefira um único container `rounded-2xl bg-card shadow-card` com linhas internas separadas por `divide-y divide-border`.
 
 ### Empty States
-- Toda tela ou seção sem dados usa o componente `components/ui/empty-state.tsx`: emoji/ícone num círculo `bg-muted`, título, descrição curta, ação opcional. Nunca um parágrafo cinza solto — isso é o que lia como "tela em branco quebrada".
+- Toda tela ou seção sem dados usa `components/ui/empty-state.tsx`: emoji/ícone num círculo `bg-muted`, título, descrição curta, ação opcional. Nunca um parágrafo cinza solto.
 
 ### Day Strip
-- Tira horizontal com os dias da semana, dia atual destacado com o laranja — **o único lugar do sistema onde o laranja aparece hoje.** Contexto visual, não decoração — reforça "hoje" como o pulso da Home.
+- Tira horizontal com os dias da semana; o dia de hoje é um círculo cheio em **tinta preta** (não em cor de domínio — a Day Strip é navegação, não dado).
 
 ### Segmented Control
 - Pílula com fundo `muted`, opção ativa em Paper com sombra sutil. Usado para filtrar estado (a fazer / concluído).
@@ -175,25 +201,25 @@ Sombra suave e ambiente é o padrão em todo card, não exceção. Cards flutuam
 - `DialogFooter` nunca tem fundo `muted`/borda separada — isso lia como barra de botões de diálogo do Windows. Botões seguem no fluxo normal do conteúdo.
 
 ### Navigation
-- Barra inferior flutuante em pílula (não fixa borda-a-borda), com os itens principais em Ink quando ativos (fundo `muted`, não laranja) e um FAB circular de ação rápida em Ink, levemente elevado acima da pílula.
+- Barra inferior flutuante em pílula, item ativo expandido com rótulo em tinta preta (`bg-foreground text-background`), inativos como ícone só; FAB circular de ação rápida em Ink, elevado acima da pílula.
 
 ## 6. Do's and Don'ts
 
 ### Do:
-- **Do** usar tinta preta (Ink) como a cor de ação padrão: botões, badges, indicador de nav ativo, FAB, checkmarks, último ponto de gráficos.
-- **Do** tratar o laranja como uma exceção rara e deliberada — hoje, só o indicador de "hoje" na Day Strip.
-- **Do** dar sombra suave a todo card em repouso; hairline só reforça divisores pontuais.
-- **Do** usar emoji como ícone de categoria (sono, treino, alimentação, medicação), sempre no mesmo tamanho e posição.
-- **Do** usar `EmptyState` para qualquer lista, tela ou card sem dados.
+- **Do** manter cor **só nos elementos de dado**: anéis, arcos, chips de categoria, barras de macro.
+- **Do** abrir cada tela de área com um anel-herói na cor do domínio.
+- **Do** puxar cor e emoji de domínio sempre de `lib/domains.ts` — fonte única.
+- **Do** usar tinta preta em todo botão, texto, nav ativo e FAB.
+- **Do** usar os componentes padrão: `Section`, `StatTile`, `MetricBar`, `Ring`, `EmptyState`.
+- **Do** dar sombra suave a todo card; `rounded-3xl` + `p-6` nos cards-herói, `rounded-2xl` nas listas.
 - **Do** manter Geist Mono para números isolados.
-- **Do** tratar dark mode como tema de primeira classe.
+- **Do** tratar dark mode como tema de primeira classe (as cores de domínio têm variante clareada no `.dark`).
 
 ### Don't:
-- **Don't** adicionar um segundo uso do laranja sem antes tentar tinta preta — se preto resolve, use preto.
-- **Don't** usar emoji como decoração de frase corrida — só como ícone de categoria.
-- **Don't** usar paleta pastel aleatória, ilustrações fofas ou badges de conquista brilhantes tipo app de dieta genérico.
+- **Don't** colorir botão, texto ou preenchimento de card — cor é dado, não decoração nem ênfase.
+- **Don't** improvisar um tom novo ou reusar a cor de um domínio em outro — uma cor por domínio.
+- **Don't** usar emoji como decoração de frase corrida — só como ícone de categoria/chip.
 - **Don't** usar `border-left`/`border-right` coloridos como acento decorativo.
 - **Don't** usar hero-metric com gradiente, grades de cards idênticos, ou eyebrows numerados (01/02/03).
-- **Don't** colocar branco puro atrás de branco puro sem sombra os separando.
-- **Don't** aninhar Card dentro de Card — use um container com `divide-y` para listas de itens relacionados.
+- **Don't** aninhar Card dentro de Card — use um container com `divide-y`.
 - **Don't** deixar uma tela ou lista vazia mostrar só uma linha de texto cinza — use `EmptyState`.

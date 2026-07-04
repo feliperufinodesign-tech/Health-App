@@ -11,7 +11,7 @@ export default async function SessaoPage() {
 
   if (!session) {
     return (
-      <main className="flex flex-col gap-4 p-4 pb-8">
+      <main className="flex flex-col gap-5 p-5 pb-8">
         <h1 className="text-xl font-semibold">Treino de hoje</h1>
         <EmptyState
           icon={<span aria-hidden>🏋️</span>}
@@ -34,7 +34,7 @@ export default async function SessaoPage() {
   }
 
   return (
-    <main className="flex flex-col gap-4 p-4 pb-8">
+    <main className="flex flex-col gap-5 p-5 pb-8">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Treino de hoje</h1>
         <LinkButton href="/treino" variant="ghost" size="sm">

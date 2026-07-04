@@ -40,6 +40,16 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  /* Domain colors — color-as-data (Apple Health / Oura style). Used only on
+     rings, arcs, and metric chips; never on buttons or large fills. */
+  --color-energia: var(--energia);
+  --color-sono: var(--sono);
+  --color-treino: var(--treino);
+  --color-comida: var(--comida);
+  --color-remedio: var(--remedio);
+  --color-protein: var(--protein);
+  --color-carb: var(--carb);
+  --color-fat: var(--fat);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -77,6 +87,15 @@
   --chart-3: oklch(0.5 0 0);
   --chart-4: oklch(0.65 0 0);
   --chart-5: oklch(0.8 0 0);
+  /* Domain palette — each health area owns one hue for its ring/arc/chip. */
+  --energia: oklch(0.58 0.17 300);
+  --sono: oklch(0.55 0.14 262);
+  --treino: oklch(0.62 0.14 152);
+  --comida: oklch(0.68 0.15 58);
+  --remedio: oklch(0.62 0.1 205);
+  --protein: oklch(0.62 0.17 20);
+  --carb: oklch(0.72 0.14 75);
+  --fat: oklch(0.66 0.12 250);
   --radius: 0.75rem;
   --shadow-card: 0 1px 2px oklch(0 0 0 / 4%), 0 8px 24px -12px oklch(0 0 0 / 10%);
   --shadow-overlay: 0 16px 40px -12px oklch(0 0 0 / 20%);
@@ -120,6 +139,15 @@
   --chart-5: oklch(0.35 0 0);
   --shadow-card: 0 1px 2px oklch(0 0 0 / 20%), 0 8px 24px -12px oklch(0 0 0 / 40%);
   --shadow-overlay: 0 16px 40px -12px oklch(0 0 0 / 60%);
+  /* Domain palette — lifted for legibility on the near-black canvas. */
+  --energia: oklch(0.68 0.16 300);
+  --sono: oklch(0.66 0.13 262);
+  --treino: oklch(0.7 0.14 152);
+  --comida: oklch(0.74 0.14 58);
+  --remedio: oklch(0.7 0.1 205);
+  --protein: oklch(0.7 0.16 20);
+  --carb: oklch(0.78 0.13 75);
+  --fat: oklch(0.72 0.12 250);
   --sidebar: oklch(0.12 0 0);
   --sidebar-foreground: oklch(0.96 0 0);
   --sidebar-primary: oklch(0.7 0.18 45);

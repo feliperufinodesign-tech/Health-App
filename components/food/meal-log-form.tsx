@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { addMealItem, type AddMealItemState } from "@/lib/food";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,14 +21,34 @@ const REFEICOES: { value: Refeicao; label: string }[] = [
   { value: "lanche", label: "Lanche" },
 ];
 
-export function MealLogForm({ data, foods }: { data: string; foods: Food[] }) {
+export function MealLogForm({
+  data,
+  foods,
+  onSuccess,
+}: {
+  data: string;
+  foods: Food[];
+  onSuccess?: () => void;
+}) {
   const [state, formAction, pending] = useActionState<AddMealItemState, FormData>(
     addMealItem,
     { error: null },
   );
+  const submittedOnce = useRef(false);
+
+  useEffect(() => {
+    if (!submittedOnce.current || pending) return;
+    if (!state.error) onSuccess?.();
+  }, [pending, state.error, onSuccess]);
 
   return (
-    <form action={formAction} className="flex flex-col gap-4">
+    <form
+      action={(formData) => {
+        submittedOnce.current = true;
+        formAction(formData);
+      }}
+      className="flex flex-col gap-4"
+    >
       <input type="hidden" name="data" value={data} />
 
       <div className="flex flex-col gap-2">

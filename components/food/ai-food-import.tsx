@@ -5,16 +5,10 @@ import { bulkCreateFoods, type NewFoodInput } from "@/lib/food";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 type EditableFood = NewFoodInput & { key: string };
 
-export function AiFoodImport() {
+export function AiFoodImport({ onSuccess }: { onSuccess?: () => void }) {
   const [text, setText] = useState("");
   const [items, setItems] = useState<EditableFood[]>([]);
   const [analyzing, setAnalyzing] = useState(false);
@@ -76,6 +70,7 @@ export function AiFoodImport() {
       );
       setItems([]);
       setText("");
+      onSuccess?.();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Erro ao salvar alimentos");
     } finally {
@@ -84,12 +79,8 @@ export function AiFoodImport() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Cadastrar em lote com IA</CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-4">
-        <Textarea
+    <div className="flex flex-col gap-4">
+      <Textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Cole uma lista, tabela ou descrição dos alimentos (nome, quantidade, kcal, macros)..."
@@ -208,7 +199,6 @@ export function AiFoodImport() {
             </Button>
           </div>
         )}
-      </CardContent>
-    </Card>
+    </div>
   );
 }

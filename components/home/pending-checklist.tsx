@@ -129,7 +129,7 @@ export function PendingChecklist({
               <span className="relative flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-base">
                 <span aria-hidden>{item.emoji}</span>
                 {item.done && (
-                  <span className="absolute -right-0.5 -bottom-0.5 flex size-3.5 items-center justify-center rounded-full bg-primary text-primary-foreground ring-2 ring-card">
+                  <span className="absolute -right-0.5 -bottom-0.5 flex size-3.5 items-center justify-center rounded-full bg-foreground text-background ring-2 ring-card">
                     <CheckIcon className="size-2" strokeWidth={3} />
                   </span>
                 )}

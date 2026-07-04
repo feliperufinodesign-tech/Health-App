@@ -37,7 +37,7 @@ export function BottomNav() {
                   className={cn(
                     "flex size-10 items-center justify-center rounded-full transition-colors",
                     active
-                      ? "bg-primary/10 text-primary"
+                      ? "bg-muted text-foreground"
                       : "text-muted-foreground hover:text-foreground",
                   )}
                 >
@@ -50,7 +50,7 @@ export function BottomNav() {
         <Link
           href="/assistente"
           aria-label="Registro rápido com o assistente"
-          className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-overlay transition-transform active:scale-95"
+          className="flex size-12 shrink-0 items-center justify-center rounded-full bg-foreground text-background shadow-overlay transition-transform active:scale-95"
         >
           <Plus className="size-5" strokeWidth={2.5} />
         </Link>

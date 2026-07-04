@@ -7,12 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import type { Food } from "@/lib/types";
 
 type MatchedItem = { food_id: string; quantidade: number };
@@ -110,12 +104,8 @@ export function RecipeAiBuilder({ catalog }: { catalog: Food[] }) {
   const hasResult = matched.length > 0 || unmatched.length > 0;
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Montar receita com IA</CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-4">
-        <Textarea
+    <div className="flex flex-col gap-4">
+      <Textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Descreva a receita (ex: shake com 300ml leite integral, 30g aveia, 1 banana, 30g pasta de amendoim)..."
@@ -273,7 +263,6 @@ export function RecipeAiBuilder({ catalog }: { catalog: Food[] }) {
             </Button>
           </div>
         )}
-      </CardContent>
-    </Card>
+    </div>
   );
 }

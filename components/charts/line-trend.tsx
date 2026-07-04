@@ -49,7 +49,7 @@ export function LineTrend({ values, width = 240, height = 56 }: LineTrendProps) 
         strokeWidth={1.5}
         vectorEffect="non-scaling-stroke"
       />
-      <circle cx={lastX} cy={lastY} r={3} className="fill-primary" />
+      <circle cx={lastX} cy={lastY} r={3} className="fill-foreground" />
     </svg>
   );
 }

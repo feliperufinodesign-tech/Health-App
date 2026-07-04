@@ -28,7 +28,7 @@ export function ScoreGauge({ score, size = 88 }: ScoreGaugeProps) {
         <path
           d={`M ${stroke},${size / 2} A ${radius},${radius} 0 0 1 ${size - stroke},${size / 2}`}
           fill="none"
-          className="stroke-primary transition-[stroke-dashoffset] duration-700 ease-out"
+          className="stroke-foreground transition-[stroke-dashoffset] duration-700 ease-out"
           strokeWidth={stroke}
           strokeLinecap="round"
           strokeDasharray={circumference}

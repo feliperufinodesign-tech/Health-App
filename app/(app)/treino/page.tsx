@@ -1,14 +1,8 @@
 import { findActivePlanDayForToday, getSessionByDate } from "@/lib/workout";
 import { todayISO, todayDiaSemana } from "@/lib/date";
-import { StartSessionButton } from "@/components/workout/start-session-button";
+import { TodayWorkoutCard } from "@/components/workout/today-workout-card";
 import { DIA_LABEL } from "@/components/workout/plan-day-editor";
 import { LinkButton } from "@/components/ui/link-button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 export default async function TreinoPage() {
   const data = todayISO();
@@ -19,7 +13,7 @@ export default async function TreinoPage() {
   ]);
 
   return (
-    <main className="flex flex-col gap-4 p-4">
+    <main className="flex flex-col gap-4 p-4 pb-8">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Treino</h1>
         <div className="flex gap-2">
@@ -32,37 +26,7 @@ export default async function TreinoPage() {
         </div>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Hoje — {DIA_LABEL[dia]}</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-3">
-          {!planDay ? (
-            <p className="text-sm text-muted-foreground">
-              Nenhum treino programado para hoje.
-            </p>
-          ) : session ? (
-            <div className="flex items-center justify-between">
-              <span className="text-sm">
-                {planDay.nome ?? "Treino"} —{" "}
-                {session.concluido ? "concluído" : "em andamento"}
-              </span>
-              <LinkButton href="/treino/sessao" size="sm">
-                Abrir
-              </LinkButton>
-            </div>
-          ) : (
-            <div className="flex items-center justify-between">
-              <span className="text-sm">{planDay.nome ?? "Treino"}</span>
-              <StartSessionButton
-                data={data}
-                planDayId={planDay.id}
-                exercises={planDay.exercises}
-              />
-            </div>
-          )}
-        </CardContent>
-      </Card>
+      <TodayWorkoutCard data={data} diaLabel={DIA_LABEL[dia]} planDay={planDay} session={session} />
     </main>
   );
 }

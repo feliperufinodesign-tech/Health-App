@@ -1,6 +1,6 @@
 ---
 name: Rotina & Saúde
-description: Painel pessoal de saúde, neutro e caloroso, com um pulso de cor
+description: Painel pessoal de saúde, quase inteiramente grayscale, com um único acento raro
 colors:
   primary: "oklch(0.65 0.19 45)"
   primary-foreground: "oklch(1 0 0)"
@@ -56,13 +56,13 @@ spacing:
   xl: "32px"
 components:
   button-primary:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.primary-foreground}"
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.bg}"
     rounded: "{rounded.md}"
     padding: "6px 14px"
   button-primary-hover:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.primary-foreground}"
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.bg}"
   button-outline:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.ink}"
@@ -78,39 +78,44 @@ components:
 
 ## 1. Overview
 
-**Creative North Star: "Sinal Vital"**
+**Creative North Star: "Sinal Vital" (recalibrado — quieter pass)**
 
-Rotina & Saúde é um painel pessoal, não um formulário burocrático. A base continua sendo a mesma disciplina de antes — neutro, denso, sem ruído — mas agora com um pulso: um único laranja quente que marca o que está vivo agora (a ação de hoje, o progresso, a conclusão), sobre um canvas off-white macio e cartões brancos com sombra suave, no espírito de apps como o de leitura por hábito ou o Iconly: cordial sem infantilizar, denso sem parecer burocrático.
+Rotina & Saúde é um painel pessoal, não um formulário burocrático. A base é neutra, densa, sem ruído: ~80% branco e cinza, ~15% tinta preta (texto, botões, ícones, estados ativos), e uma única exceção de cor — o laranja — reservada a um único ponto por tela, no máximo. Uma tentativa anterior deste sistema espalhava o laranja por botões, badges, gráficos e navegação; isso lia como ruído repetido, não como sinal, e foi corrigido: **o preto agora carrega o peso que antes era do laranja.**
 
-O sistema ainda rejeita o clichê de "app de dieta" raso (paleta pastel aleatória, cards idênticos, gamificação vazia), mas não rejeita mais cor ou emoji por princípio — eles voltam como sinal, não decoração: o laranja marca o que é acionável e vivo; o emoji, quando usado, substitui um ícone de linha para dar identidade a uma categoria (sono, treino, alimentação, medicação), nunca decora frases soltas.
+O sistema ainda rejeita o clichê de "app de dieta" raso (paleta pastel aleatória, cards idênticos, gamificação vazia) e o clichê oposto de "SaaS cinza sem alma" — a superfície ganha elevação real (sombra suave e ambiente em todos os cards, não só em overlays), tiras de navegação horizontais, controles segmentados em pílula, e uma navegação inferior flutuante com ação rápida (FAB, agora em tinta preta). Emoji seguem como ícone de categoria (sono, treino, alimentação, medicação), nunca como decoração de frase solta.
 
-Densidade continua alta (`text-sm`/`text-xs` predominam), mas a superfície ganha elevação real: sombra suave e ambiente em todos os cards (não só em overlays), tiras de navegação horizontais, controles segmentados em pílula, e uma navegação inferior flutuante com ação rápida (FAB). Light e dark mode continuam recebendo o mesmo cuidado.
+Densidade continua alta (`text-sm`/`text-xs` predominam). Light e dark mode continuam recebendo o mesmo cuidado.
 
 **Key Characteristics:**
-- Um único acento: laranja quente (`primary`), usado com moderação — ação primária, indicador ativo, progresso, "hoje".
-- Canvas off-white morno (não branco puro), cartões brancos com sombra suave — nunca mais flat-por-padrão.
+- Tinta preta (`foreground`) é a cor de ação: todo botão primário, badge de conclusão, indicador de nav ativo, FAB, e todo "último ponto" de gráfico (barra, linha, gauge) usam ink — não laranja.
+- Laranja (`primary`) é uma exceção deliberada e rara: hoje, é usado só no indicador de "hoje" na tira de dias da Home. Antes de adicionar um segundo uso, pergunte se um ponto de tinta preta já resolveria — geralmente resolve.
+- Canvas off-white morno (não branco puro), cartões brancos com sombra suave — nunca flat-por-padrão.
+- Dialogs são bottom sheets no mobile (ancorados embaixo, cantos superiores arredondados), viram modal centralizado só a partir de `sm:`.
 - Emoji como ícone de categoria (sono, treino, alimentação, medicação), nunca como decoração de frase.
-- Navegação inferior flutuante em pílula com um FAB de ação rápida.
+- Navegação inferior flutuante em pílula com um FAB de ação rápida em tinta preta.
 - Geist Mono reservado para leituras numéricas.
+- Telas vazias usam o componente `EmptyState` (ícone/emoji + título + descrição) — nunca uma única linha cinza solta no meio de uma tela em branco.
 
 ## 2. Colors
 
-Um canvas neutro e morno carrega a base; o laranja é usado com intenção, nunca como preenchimento generalizado.
+Um canvas neutro e morno carrega a base; tinta preta faz o trabalho pesado; o laranja é a exceção rara, não a regra.
 
-### Primary
-- **Laranja Vital** (`oklch(0.65 0.19 45)`): a única cor de destaque do sistema. Botão primário, dia ativo na tira de datas, FAB, indicador de progresso/streak, checkbox concluído. Texto sempre branco sobre ele (contraste e leitura perceptual).
+### Ink (a cor de ação)
+- **Ink** (`oklch(0.16 0 0)`): texto primário, botão/badge default, indicador ativo de navegação, FAB, checkmark de conclusão, arco do gauge de energia, última barra/ponto de qualquer gráfico de tendência. Sempre acromático — é o "preto" dos 15% pedidos, e é ele que carrega quase toda a hierarquia de ação da interface.
+
+### Primary (a exceção rara)
+- **Laranja Vital** (`oklch(0.65 0.19 45)`): reservado hoje a um único uso — o indicador de "hoje" na tira de dias da Home (`components/home/day-strip.tsx`). Não é mais o botão primário, nem o FAB, nem badges, nem gráficos. Antes de introduzir um segundo uso, confirme que tinta preta não resolveria; na dúvida, use ink.
 
 ### Neutral
 - **Fog Morno** (`oklch(0.97 0.008 70)`): fundo de canvas. Off-white com leve calor, nunca branco puro.
 - **Paper** (`oklch(1 0 0)`): superfície de cards, dialogs, popovers, sempre com sombra suave por cima do Fog.
 - **Hairline** (`oklch(0.9 0.006 70)`): bordas onde a sombra sozinha não basta (divisores de lista, inputs).
-- **Ink** (`oklch(0.16 0 0)`): texto primário, sempre acromático — o calor mora no fundo e no acento, não no texto.
 - **Muted** (`oklch(0.52 0.005 70)`): texto secundário, labels, ícones inativos.
 
 ### Named Rules
-**A Regra do Pulso Único.** Uma cor, usada com intenção: o laranja aparece em no máximo ~15% de qualquer tela — ação primária, "hoje", progresso. Fora disso, hierarquia continua vindo de peso e espaçamento.
+**A Regra do Pulso Único.** O laranja aparece no máximo em UM elemento da UI inteira (não por tela — no app inteiro), e só quando tinta preta genuinamente não comunicaria o mesmo. Fora disso, hierarquia vem de peso, espaçamento e tinta preta.
 
-**A Regra dos Dois Planos.** Canvas (Fog Morno) e superfície (Paper) continuam sendo dois degraus distintos; agora a separação é reforçada por sombra suave, não só por contraste de cinza.
+**A Regra dos Dois Planos.** Canvas (Fog Morno) e superfície (Paper) continuam sendo dois degraus distintos; a separação é reforçada por sombra suave, não só por contraste de cinza.
 
 ## 3. Typography
 
@@ -141,40 +146,54 @@ Sombra suave e ambiente é o padrão em todo card, não exceção. Cards flutuam
 
 ### Buttons
 - **Shape:** `rounded-md` (0.5rem).
-- **Primary:** fundo Laranja Vital, texto branco. Reservado pra a ação principal de cada tela e pro FAB.
+- **Primary (default variant):** fundo Ink, texto Paper. É a ação principal de cada tela, o FAB, e virtualmente todo `<Button>` sem `variant`.
 - **Outline/Ghost:** fundo Paper ou transparente, texto Ink.
+- **Laranja:** nenhum botão usa laranja. Se um botão parece precisar de destaque extra além do default, o problema é hierarquia da tela, não a cor do botão.
 
 ### Chips / Badges
-- **Style:** fundo `muted`, texto Ink, `rounded-full`. Badges de progresso/streak usam o laranja.
+- **Style:** fundo `muted`, texto Ink, `rounded-full`. O variant `default` (badge de destaque/conclusão) usa Ink, não laranja.
 
 ### Cards / Containers
 - **Corner Style:** `rounded-2xl` (1.125rem) nos cards principais.
 - **Background:** sempre Paper.
 - **Shadow Strategy:** sombra suave por padrão (ver Elevation).
 - **Internal Padding:** 16-20px.
+- Nunca aninhar Card dentro de Card. Prefira um único container `rounded-2xl bg-card shadow-card` com linhas internas separadas por `divide-y divide-border` (ver `PendingChecklist`, `FoodCatalogList`, `MealLogList`) a empilhar cards menores dentro de um maior.
+
+### Empty States
+- Toda tela ou seção sem dados usa o componente `components/ui/empty-state.tsx`: emoji/ícone num círculo `bg-muted`, título, descrição curta, ação opcional. Nunca um parágrafo cinza solto — isso é o que lia como "tela em branco quebrada".
 
 ### Day Strip
-- Tira horizontal com os dias da semana, dia atual destacado com o laranja. Contexto visual, não decoração — reforça "hoje" como o pulso da tela.
+- Tira horizontal com os dias da semana, dia atual destacado com o laranja — **o único lugar do sistema onde o laranja aparece hoje.** Contexto visual, não decoração — reforça "hoje" como o pulso da Home.
 
 ### Segmented Control
-- Pílula com fundo `muted`, opção ativa em Paper com sombra sutil ou preenchida em Ink/Laranja conforme o contexto. Usado para filtrar estado (a fazer / concluído).
+- Pílula com fundo `muted`, opção ativa em Paper com sombra sutil. Usado para filtrar estado (a fazer / concluído).
+
+### Dialogs (bottom sheet no mobile)
+- No mobile, `DialogContent` é ancorado embaixo (`fixed inset-x-0 bottom-0`), com cantos superiores arredondados (`rounded-t-3xl`), um indicador de arraste (`h-1 w-9 bg-muted-foreground/25`) e entra com `slide-in-from-bottom`. A partir de `sm:`, vira modal centralizado tradicional com `zoom-in-95`.
+- Overlay usa `bg-foreground/40` (não preto fixo) para se adaptar a light/dark automaticamente, com leve `backdrop-blur`.
+- `DialogFooter` nunca tem fundo `muted`/borda separada — isso lia como barra de botões de diálogo do Windows. Botões seguem no fluxo normal do conteúdo.
 
 ### Navigation
-- Barra inferior flutuante em pílula (não fixa borda-a-borda), com os itens principais e um FAB circular de ação rápida em Laranja Vital, levemente elevado acima da pílula.
+- Barra inferior flutuante em pílula (não fixa borda-a-borda), com os itens principais em Ink quando ativos (fundo `muted`, não laranja) e um FAB circular de ação rápida em Ink, levemente elevado acima da pílula.
 
 ## 6. Do's and Don'ts
 
 ### Do:
-- **Do** usar o laranja com intenção: ação primária, "hoje", progresso — nunca como preenchimento de fundo.
+- **Do** usar tinta preta (Ink) como a cor de ação padrão: botões, badges, indicador de nav ativo, FAB, checkmarks, último ponto de gráficos.
+- **Do** tratar o laranja como uma exceção rara e deliberada — hoje, só o indicador de "hoje" na Day Strip.
 - **Do** dar sombra suave a todo card em repouso; hairline só reforça divisores pontuais.
 - **Do** usar emoji como ícone de categoria (sono, treino, alimentação, medicação), sempre no mesmo tamanho e posição.
+- **Do** usar `EmptyState` para qualquer lista, tela ou card sem dados.
 - **Do** manter Geist Mono para números isolados.
 - **Do** tratar dark mode como tema de primeira classe.
 
 ### Don't:
-- **Don't** espalhar o laranja por mais de ~15% de uma tela.
+- **Don't** adicionar um segundo uso do laranja sem antes tentar tinta preta — se preto resolve, use preto.
 - **Don't** usar emoji como decoração de frase corrida — só como ícone de categoria.
 - **Don't** usar paleta pastel aleatória, ilustrações fofas ou badges de conquista brilhantes tipo app de dieta genérico.
 - **Don't** usar `border-left`/`border-right` coloridos como acento decorativo.
 - **Don't** usar hero-metric com gradiente, grades de cards idênticos, ou eyebrows numerados (01/02/03).
 - **Don't** colocar branco puro atrás de branco puro sem sombra os separando.
+- **Don't** aninhar Card dentro de Card — use um container com `divide-y` para listas de itens relacionados.
+- **Don't** deixar uma tela ou lista vazia mostrar só uma linha de texto cinza — use `EmptyState`.

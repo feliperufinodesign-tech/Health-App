@@ -24,7 +24,7 @@ export default async function PlanDetailPage({
   if (!plan) notFound();
 
   return (
-    <main className="flex flex-col gap-4 p-4">
+    <main className="flex flex-col gap-4 p-4 pb-8">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">{plan.nome}</h1>
         <div className="flex gap-2">
@@ -45,38 +45,36 @@ export default async function PlanDetailPage({
       </Card>
 
       {plan.days.map((day) => (
-        <Card key={day.id}>
-          <CardHeader>
-            <CardTitle>
-              {DIA_LABEL[day.dia] ?? day.dia}
-              {day.nome ? ` — ${day.nome}` : ""}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            {day.exercises.length > 0 ? (
-              <ul className="flex flex-col gap-1 text-sm">
-                {day.exercises.map((ex) => (
-                  <li key={ex.id} className="flex items-center justify-between">
-                    <span>{ex.nome}</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-muted-foreground">
-                        {ex.series_alvo ?? "-"}x{ex.reps_alvo ?? "-"}
-                        {ex.carga_alvo ? ` @ ${ex.carga_alvo}kg` : ""}
-                      </span>
-                      <RemoveExerciseButton planExerciseId={ex.id} planId={plan.id} />
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-sm text-muted-foreground">
-                Nenhum exercício ainda.
-              </p>
-            )}
-            <Separator />
-            <ExerciseForm planId={plan.id} planDayId={day.id} />
-          </CardContent>
-        </Card>
+        <div key={day.id} className="flex flex-col gap-4 rounded-2xl bg-card p-4 shadow-card">
+          <p className="text-sm font-semibold tracking-tight">
+            {DIA_LABEL[day.dia] ?? day.dia}
+            {day.nome ? ` — ${day.nome}` : ""}
+          </p>
+
+          {day.exercises.length > 0 ? (
+            <ul className="flex flex-col divide-y divide-border">
+              {day.exercises.map((ex, i) => (
+                <li key={ex.id} className="flex items-center gap-3 py-2 first:pt-0 last:pb-0">
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-muted font-mono text-[0.7rem] text-muted-foreground">
+                    {i + 1}
+                  </span>
+                  <div className="flex flex-1 items-baseline justify-between gap-2">
+                    <span className="text-sm">{ex.nome}</span>
+                    <span className="font-mono text-xs text-muted-foreground">
+                      {ex.series_alvo ?? "-"}×{ex.reps_alvo ?? "-"}
+                      {ex.carga_alvo ? ` @ ${ex.carga_alvo}kg` : ""}
+                    </span>
+                  </div>
+                  <RemoveExerciseButton planExerciseId={ex.id} planId={plan.id} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-sm text-muted-foreground">Nenhum exercício ainda.</p>
+          )}
+          <Separator />
+          <ExerciseForm planId={plan.id} planDayId={day.id} />
+        </div>
       ))}
     </main>
   );

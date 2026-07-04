@@ -1,3 +1,4 @@
+import { XIcon } from "lucide-react";
 import { removeRecipeItem } from "@/lib/recipes";
 import { RecipeItemForm } from "@/components/food/recipe-item-form";
 import { Button } from "@/components/ui/button";
@@ -38,14 +39,20 @@ export function RecipeCard({
           <>
             <ul className="flex flex-col gap-1 text-sm">
               {recipe.items.map((item) => (
-                <li key={item.id} className="flex items-center justify-between">
+                <li key={item.id} className="flex items-center justify-between gap-2">
                   <span>
                     {item.food.nome} — {item.quantidade}
                     {item.food.unidade}
                   </span>
                   <form action={removeRecipeItem.bind(null, item.id)}>
-                    <Button type="submit" variant="ghost" size="sm">
-                      Remover
+                    <Button
+                      type="submit"
+                      variant="ghost"
+                      size="icon-xs"
+                      aria-label={`Remover ${item.food.nome}`}
+                      className="text-muted-foreground"
+                    >
+                      <XIcon />
                     </Button>
                   </form>
                 </li>

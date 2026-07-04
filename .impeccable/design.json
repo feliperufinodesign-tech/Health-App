@@ -1,12 +1,12 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-04T00:00:00Z",
+  "generatedAt": "2026-07-03T00:00:00Z",
   "title": "Design System: Rotina & Saúde",
   "extensions": {
     "colorMeta": {
       "primary": {
-        "role": "primary",
-        "displayName": "Laranja Vital",
+        "role": "tertiary",
+        "displayName": "Laranja Vital (acento raro — só o indicador de \"hoje\" na day strip)",
         "canonical": "oklch(0.65 0.19 45)",
         "tonalRamp": [
           "oklch(0.30 0.12 45)",
@@ -75,9 +75,9 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Ação principal. Fundo Laranja Vital, texto branco.",
+      "description": "Ação principal. Fundo Ink, texto Paper — não laranja.",
       "html": "<button class=\"ds-btn-primary\">Registrar refeição</button>",
-      "css": ".ds-btn-primary { background: oklch(0.65 0.19 45); color: oklch(1 0 0); padding: 6px 14px; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500; border: none; transition: filter 0.15s cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary:hover { filter: brightness(0.94); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px oklch(0.65 0.19 45 / 30%); }"
+      "css": ".ds-btn-primary { background: oklch(0.16 0 0); color: oklch(1 0 0); padding: 6px 14px; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500; border: none; transition: filter 0.15s cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary:hover { filter: brightness(1.2); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px oklch(0.16 0 0 / 30%); }"
     },
     {
       "name": "Card",
@@ -91,37 +91,44 @@
       "name": "Floating Bottom Nav + FAB",
       "kind": "nav",
       "refersTo": "navigation",
-      "description": "Navegação inferior flutuante em pílula com FAB de ação rápida em Laranja Vital.",
+      "description": "Navegação inferior flutuante em pílula com FAB de ação rápida em Ink (não laranja).",
       "html": "<nav class=\"ds-nav\"><span class=\"ds-nav-item ds-nav-item--active\">Hoje</span><span class=\"ds-nav-item\">Treino</span><button class=\"ds-fab\">+</button></nav>",
-      "css": ".ds-nav { display: flex; align-items: center; gap: 12px; background: oklch(1 0 0); border-radius: 9999px; padding: 8px 12px; box-shadow: 0 16px 40px -12px oklch(0 0 0 / 20%); } .ds-nav-item { font-size: 0.75rem; color: oklch(0.52 0.005 70); padding: 6px 10px; border-radius: 9999px; } .ds-nav-item--active { color: oklch(0.16 0 0); font-weight: 600; background: oklch(0.94 0.006 70); } .ds-fab { width: 40px; height: 40px; border-radius: 9999px; background: oklch(0.65 0.19 45); color: white; border: none; font-size: 1.25rem; box-shadow: 0 16px 40px -12px oklch(0 0 0 / 20%); }"
+      "css": ".ds-nav { display: flex; align-items: center; gap: 12px; background: oklch(1 0 0); border-radius: 9999px; padding: 8px 12px; box-shadow: 0 16px 40px -12px oklch(0 0 0 / 20%); } .ds-nav-item { font-size: 0.75rem; color: oklch(0.52 0.005 70); padding: 6px 10px; border-radius: 9999px; } .ds-nav-item--active { color: oklch(0.16 0 0); font-weight: 600; background: oklch(0.94 0.006 70); } .ds-fab { width: 40px; height: 40px; border-radius: 9999px; background: oklch(0.16 0 0); color: white; border: none; font-size: 1.25rem; box-shadow: 0 16px 40px -12px oklch(0 0 0 / 20%); }"
     }
   ],
   "narrative": {
-    "northStar": "Sinal Vital",
-    "overview": "Rotina & Saúde é um painel pessoal, não um formulário burocrático. A base continua neutra e densa, mas agora com um pulso: um único laranja quente que marca o que está vivo agora, sobre um canvas off-white macio e cartões brancos com sombra suave. Cor e emoji voltam como sinal, não decoração.",
+    "northStar": "Sinal Vital (recalibrado — quieter pass)",
+    "overview": "Rotina & Saúde é um painel pessoal, não um formulário burocrático. A base é ~80% branco e cinza, ~15% tinta preta (texto, botões, ícones, estados ativos), e o laranja é uma exceção rara — hoje, só o indicador de 'hoje' na day strip. Uma tentativa anterior espalhava o laranja por botões, badges, gráficos e navegação; isso lia como ruído repetido, e foi corrigido: o preto agora carrega o peso que antes era do laranja.",
     "keyCharacteristics": [
-      "Um único acento: laranja quente, usado com moderação.",
+      "Tinta preta é a cor de ação: botão primário, badge de conclusão, nav ativo, FAB, último ponto de gráfico.",
+      "Laranja é exceção rara e deliberada: hoje, só o indicador de 'hoje' na day strip.",
       "Canvas off-white morno, cartões com sombra suave.",
+      "Dialogs são bottom sheets no mobile, viram modal centralizado a partir de sm:.",
       "Emoji como ícone de categoria, nunca decoração de frase.",
-      "Navegação inferior flutuante em pílula com FAB.",
-      "Geist Mono reservado para leituras numéricas."
+      "Navegação inferior flutuante em pílula com FAB em tinta preta.",
+      "Geist Mono reservado para leituras numéricas.",
+      "Telas vazias usam o componente EmptyState, nunca uma linha cinza solta."
     ],
     "rules": [
-      { "name": "A Regra do Pulso Único", "body": "O laranja aparece em no máximo ~15% de qualquer tela — ação primária, 'hoje', progresso.", "section": "colors" },
+      { "name": "A Regra do Pulso Único", "body": "O laranja aparece no máximo em UM elemento da UI inteira, e só quando tinta preta genuinamente não comunicaria o mesmo.", "section": "colors" },
       { "name": "A Regra dos Dois Planos", "body": "Canvas e superfície são dois degraus distintos, reforçados por sombra suave.", "section": "colors" },
       { "name": "A Regra da Sombra Viva", "body": "Toda superfície elevada tem sombra suave; hairline vira reforço pontual, não a única separação.", "section": "elevation" }
     ],
     "dos": [
-      "Do usar o laranja com intenção: ação primária, 'hoje', progresso.",
+      "Do usar tinta preta como a cor de ação padrão: botões, badges, nav ativo, FAB, checkmarks, último ponto de gráficos.",
+      "Do tratar o laranja como exceção rara — hoje, só o indicador de 'hoje' na day strip.",
       "Do dar sombra suave a todo card em repouso.",
       "Do usar emoji como ícone de categoria, sempre no mesmo tamanho e posição.",
+      "Do usar EmptyState para qualquer lista, tela ou card sem dados.",
       "Do manter Geist Mono para números isolados."
     ],
     "donts": [
-      "Don't espalhar o laranja por mais de ~15% de uma tela.",
+      "Don't adicionar um segundo uso do laranja sem antes tentar tinta preta.",
       "Don't usar emoji como decoração de frase corrida.",
       "Don't usar paleta pastel aleatória ou badges de conquista brilhantes.",
-      "Don't usar hero-metric com gradiente, grades de cards idênticos, ou eyebrows numerados."
+      "Don't usar hero-metric com gradiente, grades de cards idênticos, ou eyebrows numerados.",
+      "Don't aninhar Card dentro de Card — use um container com divide-y.",
+      "Don't deixar uma tela vazia mostrar só uma linha de texto cinza."
     ]
   }
 }

@@ -15,12 +15,8 @@ function weekdayLetter(dataISO: string): string {
 
 export function EnergyCard({ score, history }: EnergyCardProps) {
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-card p-5 shadow-card">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-16 -right-16 size-48 rounded-full bg-primary/[0.08] blur-2xl"
-      />
-      <div className="relative flex items-center gap-6">
+    <div className="rounded-2xl bg-card p-5 shadow-card">
+      <div className="flex items-center gap-6">
         <ScoreGauge score={score} size={104} />
         <div className="flex flex-1 flex-col gap-3">
           <div>

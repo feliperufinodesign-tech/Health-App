@@ -1,6 +1,7 @@
 import { getExerciseProgression } from "@/lib/workout";
 import { ExerciseProgressCard } from "@/components/workout/exercise-progress-card";
 import { LinkButton } from "@/components/ui/link-button";
+import { EmptyState } from "@/components/ui/empty-state";
 
 export default async function ProgressoPage() {
   const progression = await getExerciseProgression();
@@ -9,22 +10,26 @@ export default async function ProgressoPage() {
   );
 
   return (
-    <main className="flex flex-col gap-4 p-4">
+    <main className="flex flex-col gap-4 p-4 pb-8">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Progresso</h1>
-        <LinkButton href="/treino" variant="outline" size="sm">
+        <LinkButton href="/treino" variant="ghost" size="sm">
           Voltar
         </LinkButton>
       </div>
 
       {exercises.length === 0 ? (
-        <p className="text-sm text-muted-foreground">
-          Nenhuma série concluída ainda. Termine um treino pra ver a evolução aqui.
-        </p>
+        <EmptyState
+          icon={<span aria-hidden>📈</span>}
+          title="Nenhuma série concluída ainda"
+          description="Termine um treino para ver sua evolução de carga aqui."
+        />
       ) : (
-        exercises.map(([nome, entries]) => (
-          <ExerciseProgressCard key={nome} nome={nome} entries={entries} />
-        ))
+        <div className="flex flex-col gap-3">
+          {exercises.map(([nome, entries]) => (
+            <ExerciseProgressCard key={nome} nome={nome} entries={entries} />
+          ))}
+        </div>
       )}
     </main>
   );

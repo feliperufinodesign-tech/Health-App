@@ -4,26 +4,25 @@ import { SessionSetRow } from "@/components/workout/session-set-row";
 import { AddExtraSetButton } from "@/components/workout/add-extra-set-button";
 import { CompleteSessionButton } from "@/components/workout/complete-session-button";
 import { LinkButton } from "@/components/ui/link-button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { EmptyState } from "@/components/ui/empty-state";
 
 export default async function SessaoPage() {
   const session = await getSessionByDate(todayISO());
 
   if (!session) {
     return (
-      <main className="flex flex-col gap-4 p-4">
+      <main className="flex flex-col gap-4 p-4 pb-8">
         <h1 className="text-xl font-semibold">Treino de hoje</h1>
-        <p className="text-sm text-muted-foreground">
-          Nenhuma sessão iniciada ainda.
-        </p>
-        <LinkButton href="/treino" variant="outline" size="sm" className="w-fit">
-          Voltar
-        </LinkButton>
+        <EmptyState
+          icon={<span aria-hidden>🏋️</span>}
+          title="Nenhuma sessão iniciada ainda"
+          description="Inicie o treino do dia na aba Treino para registrar suas séries aqui."
+          action={
+            <LinkButton href="/treino" size="sm">
+              Ir para Treino
+            </LinkButton>
+          }
+        />
       </main>
     );
   }
@@ -35,32 +34,30 @@ export default async function SessaoPage() {
   }
 
   return (
-    <main className="flex flex-col gap-4 p-4">
+    <main className="flex flex-col gap-4 p-4 pb-8">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Treino de hoje</h1>
-        <LinkButton href="/treino" variant="outline" size="sm">
+        <LinkButton href="/treino" variant="ghost" size="sm">
           Voltar
         </LinkButton>
       </div>
 
       {[...byExercise.entries()].map(([nome, sets]) => (
-        <Card key={nome}>
-          <CardHeader>
-            <CardTitle>{nome}</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-2">
+        <div key={nome} className="flex flex-col gap-3 rounded-2xl bg-card p-4 shadow-card">
+          <p className="text-sm font-semibold tracking-tight">{nome}</p>
+          <div className="flex flex-col gap-2">
             {sets
               .sort((a, b) => (a.serie_num ?? 0) - (b.serie_num ?? 0))
               .map((set) => (
                 <SessionSetRow key={set.id} set={set} />
               ))}
-            <AddExtraSetButton
-              sessionId={session.id}
-              planExerciseId={sets[0]?.plan_exercise_id ?? null}
-              nomeExercicio={nome}
-            />
-          </CardContent>
-        </Card>
+          </div>
+          <AddExtraSetButton
+            sessionId={session.id}
+            planExerciseId={sets[0]?.plan_exercise_id ?? null}
+            nomeExercicio={nome}
+          />
+        </div>
       ))}
 
       <CompleteSessionButton

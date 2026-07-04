@@ -1,20 +1,32 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { createPlan, type PlanFormState } from "@/lib/workout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function PlanForm() {
+export function PlanForm({ onSuccess }: { onSuccess?: () => void }) {
   const [state, formAction, pending] = useActionState<PlanFormState, FormData>(
     createPlan,
     { error: null },
   );
+  const submittedOnce = useRef(false);
+
+  useEffect(() => {
+    if (!submittedOnce.current || pending) return;
+    if (!state.error) onSuccess?.();
+  }, [pending, state.error, onSuccess]);
 
   return (
-    <form action={formAction} className="flex items-end gap-4">
-      <div className="flex flex-1 flex-col gap-2">
+    <form
+      action={(formData) => {
+        submittedOnce.current = true;
+        formAction(formData);
+      }}
+      className="flex flex-col gap-4"
+    >
+      <div className="flex flex-col gap-2">
         <Label htmlFor="nome">Nome do plano</Label>
         <Input id="nome" name="nome" placeholder="ex: ABC Hipertrofia" required />
       </div>

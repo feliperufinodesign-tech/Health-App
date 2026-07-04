@@ -68,8 +68,8 @@ export default async function HojePage() {
   const workoutDone = Boolean(session?.concluido);
 
   return (
-    <main className="flex flex-col gap-8 p-4 pb-8">
-      <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500 flex flex-col gap-4">
+    <main className="flex flex-col gap-8 p-5 pb-8">
+      <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500 flex flex-col gap-5">
         <GreetingHeader email={user?.email} />
         <InsightBanner frase={frase} />
         <DayStrip />

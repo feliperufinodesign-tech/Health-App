@@ -19,7 +19,7 @@ export default async function AlimentacaoPage() {
   ]);
 
   return (
-    <main className="flex flex-col gap-6 p-4 pb-8">
+    <main className="flex flex-col gap-6 p-5 pb-8">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Alimentação</h1>
         <div className="flex gap-2">

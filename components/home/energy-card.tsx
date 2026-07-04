@@ -1,4 +1,4 @@
-import { ScoreGauge } from "@/components/charts/score-gauge";
+import { Ring } from "@/components/ui/ring";
 import { BarTrend } from "@/components/charts/bar-trend";
 
 type EnergyCardProps = {
@@ -15,21 +15,28 @@ function weekdayLetter(dataISO: string): string {
 
 export function EnergyCard({ score, history }: EnergyCardProps) {
   return (
-    <div className="rounded-2xl bg-card p-5 shadow-card">
+    <div className="flex flex-col gap-6 rounded-3xl bg-card p-6 shadow-card">
       <div className="flex items-center gap-6">
-        <ScoreGauge score={score} size={104} />
-        <div className="flex flex-1 flex-col gap-3">
-          <div>
-            <p className="text-base font-semibold tracking-tight">Energia</p>
-            <p className="mt-0.5 text-xs text-muted-foreground">
-              Sono, alimentação, treino e medicação de hoje
-            </p>
+        <Ring size={108} stroke={9} value={score}>
+          <div className="flex flex-col items-center leading-none">
+            <span className="font-mono text-[2rem] font-semibold tracking-tight">{score}</span>
+            <span className="mt-1 text-[0.65rem] text-muted-foreground">/ 100</span>
           </div>
-          <BarTrend
-            points={history.map((h) => ({ label: weekdayLetter(h.data), value: h.score }))}
-            height={30}
-          />
+        </Ring>
+        <div className="flex flex-1 flex-col gap-1">
+          <p className="text-lg font-semibold tracking-tight">Energia de hoje</p>
+          <p className="text-sm leading-snug text-muted-foreground text-pretty">
+            Combina seu sono, alimentação, treino e medicação do dia.
+          </p>
         </div>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <p className="text-xs font-medium text-muted-foreground">Últimos 6 dias</p>
+        <BarTrend
+          points={history.map((h) => ({ label: weekdayLetter(h.data), value: h.score }))}
+          height={36}
+        />
       </div>
     </div>
   );

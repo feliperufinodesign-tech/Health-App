@@ -14,7 +14,7 @@ export default async function MedicacaoPage() {
   const slots = await getTodayMedStatus(data);
 
   return (
-    <main className="flex flex-col gap-4 p-4">
+    <main className="flex flex-col gap-6 p-5 pb-8">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Medicação</h1>
         <LinkButton href="/medicacao/cadastro" variant="outline" size="sm">

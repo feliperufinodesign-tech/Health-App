@@ -11,6 +11,7 @@ export function GreetingHeader({ email }: { email: string | undefined }) {
   const now = new Date();
   const greeting = greetingForHour(now.getHours());
   const nome = email?.split("@")[0] ?? "";
+  const nomeCapitalizado = nome ? nome.charAt(0).toUpperCase() + nome.slice(1) : "";
   const dataFormatada = now.toLocaleDateString("pt-BR", {
     weekday: "long",
     day: "numeric",
@@ -18,12 +19,12 @@ export function GreetingHeader({ email }: { email: string | undefined }) {
   });
 
   return (
-    <header className="flex items-start justify-between gap-4">
+    <header className="flex items-center justify-between gap-4">
       <div>
         <p className="text-sm text-muted-foreground capitalize">{dataFormatada}</p>
-        <h1 className="mt-0.5 text-[1.75rem] leading-tight font-semibold tracking-tight text-balance">
+        <h1 className="mt-1 text-[2rem] leading-none font-semibold tracking-tight text-balance">
           {greeting}
-          {nome ? `, ${nome}` : ""}
+          {nomeCapitalizado ? `, ${nomeCapitalizado}` : ""}
         </h1>
       </div>
       <ProfileMenu email={email} />

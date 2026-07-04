@@ -34,7 +34,7 @@ export default async function SonoPage() {
   });
 
   return (
-    <main className="flex flex-col gap-8 p-4 pb-8">
+    <main className="flex flex-col gap-8 p-5 pb-8">
       <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500 flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <h1 className="text-[1.75rem] leading-tight font-semibold tracking-tight">

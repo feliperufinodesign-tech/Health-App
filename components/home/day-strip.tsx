@@ -12,19 +12,22 @@ export function DayStrip() {
   });
 
   return (
-    <div className="flex justify-between rounded-2xl bg-card p-3 shadow-card">
+    <div className="flex justify-between rounded-3xl bg-card px-2 py-4 shadow-card">
       {days.map((d) => {
         const isToday = d.toDateString() === today.toDateString();
+        const isPast = d < today && !isToday;
         return (
-          <div key={d.toISOString()} className="flex flex-1 flex-col items-center gap-1.5">
+          <div key={d.toISOString()} className="flex flex-1 flex-col items-center gap-2">
             <span className="text-[0.7rem] font-medium text-muted-foreground">
               {WEEKDAY_LABELS[d.getDay()]}
             </span>
             <span
               className={
                 isToday
-                  ? "flex size-8 items-center justify-center rounded-full bg-primary font-mono text-sm font-semibold text-primary-foreground"
-                  : "flex size-8 items-center justify-center rounded-full font-mono text-sm text-foreground/70"
+                  ? "flex size-9 items-center justify-center rounded-full bg-foreground font-mono text-sm font-semibold text-background"
+                  : isPast
+                    ? "flex size-9 items-center justify-center rounded-full font-mono text-sm text-foreground/45"
+                    : "flex size-9 items-center justify-center rounded-full font-mono text-sm text-foreground/80"
               }
             >
               {d.getDate()}

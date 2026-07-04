@@ -14,10 +14,9 @@ import {
 
 const NAV_ITEMS = [
   { href: "/hoje", label: "Hoje", icon: CalendarCheck },
-  { href: "/alimentacao", label: "Alimentação", icon: Utensils },
+  { href: "/alimentacao", label: "Comida", icon: Utensils },
   { href: "/treino", label: "Treino", icon: Dumbbell },
-  { href: "/medicacao", label: "Medicação", icon: Pill },
-  { href: "/assistente", label: "Assistente", icon: Bot },
+  { href: "/medicacao", label: "Remédio", icon: Pill },
 ];
 
 export function BottomNav() {
@@ -35,13 +34,14 @@ export function BottomNav() {
                   href={href}
                   aria-label={label}
                   className={cn(
-                    "flex size-10 items-center justify-center rounded-full transition-colors",
+                    "flex h-10 items-center gap-1.5 rounded-full transition-all",
                     active
-                      ? "bg-muted text-foreground"
-                      : "text-muted-foreground hover:text-foreground",
+                      ? "bg-foreground px-3.5 text-background"
+                      : "w-10 justify-center text-muted-foreground hover:text-foreground",
                   )}
                 >
                   <Icon className="size-[1.15rem]" strokeWidth={active ? 2.25 : 1.85} />
+                  {active && <span className="text-sm font-medium">{label}</span>}
                 </Link>
               </li>
             );

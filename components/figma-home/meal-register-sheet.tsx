@@ -3,39 +3,66 @@
 import { useState } from "react";
 import { X, Camera, ImageIcon, Mic, ArrowUp } from "lucide-react";
 import { Sheet } from "@/components/figma-home/sheet";
+import { registerMealFromText } from "@/lib/food";
+import type { Refeicao } from "@/lib/types";
 
 type Message = { role: "user" | "assistant"; text: string };
 
-const INITIAL: Message[] = [
-  {
-    role: "user",
-    text: "Adicione shake da tarde. Iorgute grego, 100g de banana, 20g leite em pó, 20g de granola e 7 g de castanha de caju",
-  },
-  {
-    role: "assistant",
-    text: "Refeição adicionada, lembre de treinar as 14h. Como você comeu agora de um intervalo para iniciar o treino",
-  },
-];
+const REFEICAO_LABEL: Record<Refeicao, string> = {
+  cafe: "café da manhã",
+  almoco: "almoço",
+  lanche: "lanche",
+  jantar: "jantar",
+};
 
-export function MealRegisterSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const [messages, setMessages] = useState<Message[]>(INITIAL);
+export function MealRegisterSheet({
+  open,
+  onClose,
+  data,
+  refeicao,
+  onRegistered,
+}: {
+  open: boolean;
+  onClose: () => void;
+  data: string;
+  refeicao: Refeicao;
+  onRegistered: () => void;
+}) {
+  const [messages, setMessages] = useState<Message[]>([]);
   const [draft, setDraft] = useState("");
+  const [pending, setPending] = useState(false);
 
-  function send() {
+  async function send() {
     const text = draft.trim();
-    if (!text) return;
-    setMessages((m) => [
-      ...m,
-      { role: "user", text },
-      { role: "assistant", text: "Refeição adicionada. Registrei os alimentos e as calorias." },
-    ]);
+    if (!text || pending) return;
     setDraft("");
+    setMessages((m) => [...m, { role: "user", text }]);
+    setPending(true);
+    setMessages((m) => [...m, { role: "assistant", text: "Analisando…" }]);
+
+    const result = await registerMealFromText(data, refeicao, text);
+
+    setMessages((m) => {
+      const next = m.slice(0, -1);
+      if (result.error) {
+        next.push({ role: "assistant", text: result.error });
+      } else {
+        next.push({
+          role: "assistant",
+          text: `Refeição adicionada ao ${REFEICAO_LABEL[refeicao]}${
+            result.kcal ? `, ${result.kcal} kcal.` : "."
+          }`,
+        });
+      }
+      return next;
+    });
+    setPending(false);
+    if (!result.error) onRegistered();
   }
 
   return (
     <Sheet open={open} onClose={onClose}>
       <div className="flex min-h-[78vh] flex-col px-7 pt-1">
-        {/* Close */}
         <div className="flex justify-end">
           <button
             type="button"
@@ -47,7 +74,6 @@ export function MealRegisterSheet({ open, onClose }: { open: boolean; onClose: (
           </button>
         </div>
 
-        {/* Heading */}
         <p className="text-center text-[13px] uppercase tracking-[0.14em] text-white/55">
           Assistente
         </p>
@@ -55,7 +81,6 @@ export function MealRegisterSheet({ open, onClose }: { open: boolean; onClose: (
           Descreva sua refeição que a IA vai adicionar
         </h2>
 
-        {/* Messages */}
         <div className="mt-8 flex flex-1 flex-col gap-6 overflow-y-auto py-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {messages.map((m, i) => (
             <div
@@ -76,7 +101,6 @@ export function MealRegisterSheet({ open, onClose }: { open: boolean; onClose: (
           ))}
         </div>
 
-        {/* Input bar */}
         <div className="flex items-center gap-3 pt-3">
           <button type="button" aria-label="Câmera" className="text-white">
             <Camera className="size-7" strokeWidth={1.75} />
@@ -89,7 +113,8 @@ export function MealRegisterSheet({ open, onClose }: { open: boolean; onClose: (
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && send()}
-              placeholder="Message"
+              placeholder="Descreva a refeição…"
+              disabled={pending}
               className="min-w-0 flex-1 bg-transparent text-[16px] text-black outline-none placeholder:text-black/40"
             />
             <Mic className="size-5 shrink-0 text-black/70" strokeWidth={1.75} />
@@ -98,7 +123,8 @@ export function MealRegisterSheet({ open, onClose }: { open: boolean; onClose: (
             type="button"
             aria-label="Enviar"
             onClick={send}
-            className="flex size-12 shrink-0 items-center justify-center rounded-full bg-black text-white transition-transform active:scale-95"
+            disabled={pending}
+            className="flex size-12 shrink-0 items-center justify-center rounded-full bg-black text-white transition-transform active:scale-95 disabled:opacity-50"
           >
             <ArrowUp className="size-6" strokeWidth={2.25} />
           </button>

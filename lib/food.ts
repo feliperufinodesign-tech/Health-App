@@ -191,3 +191,34 @@ export async function getDayTotals(data: string): Promise<DayTotals> {
     { kcal: 0, proteina: 0, carbo: 0, gordura: 0 },
   );
 }
+
+export type RegisterMealResult = { error: string | null; kcal?: number };
+
+// Register a whole meal from a free-text description: the AI parses the foods,
+// they're created in the catalog and added to the day's meal log.
+export async function registerMealFromText(
+  data: string,
+  refeicao: Refeicao,
+  text: string,
+): Promise<RegisterMealResult> {
+  const { parseFoodsFromText } = await import("@/lib/food-ai");
+  try {
+    const parsed = await parseFoodsFromText(text);
+    if (parsed.length === 0) {
+      return { error: "Não consegui identificar os alimentos. Tente descrever com mais detalhe." };
+    }
+    const created = await bulkCreateFoods(parsed);
+    const mealLogId = await getOrCreateMealLog(data, refeicao);
+    let kcal = 0;
+    for (let i = 0; i < created.length; i++) {
+      const qtd = parsed[i].base_qtd;
+      await addFoodToMealLog(mealLogId, created[i].id, qtd);
+      kcal += created[i].kcal;
+    }
+    revalidatePath("/alimentacao");
+    revalidatePath("/hoje");
+    return { error: null, kcal: Math.round(kcal) };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Erro ao registrar refeição" };
+  }
+}

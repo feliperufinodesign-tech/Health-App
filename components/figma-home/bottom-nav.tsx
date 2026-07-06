@@ -6,7 +6,7 @@ import { Home, Utensils, Dumbbell, Pill, Trophy, Plus } from "lucide-react";
 
 const ITEMS = [
   { name: "Início", href: "/hoje", icon: Home },
-  { name: "Sessões", href: "/alimentacao", icon: Utensils },
+  { name: "Dieta", href: "/alimentacao", icon: Utensils },
   { name: "Jogar", href: "/treino", icon: Dumbbell },
   { name: "Elenco", href: "/medicacao", icon: Pill },
   { name: "Ranking", href: "/energia", icon: Trophy },
@@ -41,6 +41,7 @@ export function BottomNav() {
       <button
         type="button"
         aria-label="Adicionar"
+        onClick={() => window.dispatchEvent(new CustomEvent("app-fab-add"))}
         className="flex size-[58px] shrink-0 items-center justify-center rounded-full bg-white text-black shadow-[0_8px_38px_rgba(0,0,0,0.5)] transition-transform active:scale-95"
       >
         <Plus className="size-6" strokeWidth={2.25} />

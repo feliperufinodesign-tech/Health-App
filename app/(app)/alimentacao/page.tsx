@@ -1,45 +1,53 @@
-import { listFoods, getMealLogsWithItems, getDayTotals } from "@/lib/food";
-import { getDailyGoal } from "@/lib/goals";
-import { listRecipes } from "@/lib/recipes";
-import { todayISO } from "@/lib/date";
-import { MealLogList } from "@/components/food/meal-log-list";
-import { NutritionSummaryCard } from "@/components/food/nutrition-summary-card";
-import { AddMealDialog } from "@/components/food/add-meal-dialog";
-import { GoalsDialog } from "@/components/goals/goals-dialog";
-import { LinkButton } from "@/components/ui/link-button";
+import { CalendarStrip } from "@/components/figma-home/calendar-strip";
+import { CaloriesCard } from "@/components/figma-home/calories-card";
+import { MacroCard } from "@/components/figma-home/macro-card";
+import { DietMeals } from "@/components/figma-home/diet-meals";
+import { BottomNav } from "@/components/figma-home/bottom-nav";
 
-export default async function AlimentacaoPage() {
-  const data = todayISO();
-  const [foods, logs, totals, goal, recipes] = await Promise.all([
-    listFoods(),
-    getMealLogsWithItems(data),
-    getDayTotals(data),
-    getDailyGoal(),
-    listRecipes(),
-  ]);
+// UI Assistente-AI — Dieta tab (Figma node 1:142).
+export default function DietaPage() {
+  const now = new Date();
+  const month = now.toLocaleDateString("pt-BR", { month: "long" });
+  const dateStr = `${month.charAt(0).toUpperCase()}${month.slice(1)} ${now.getDate()}, ${now.getFullYear()}`;
 
   return (
-    <main className="flex flex-col gap-6 p-5 pb-8">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Alimentação</h1>
-        <div className="flex gap-2">
-          <LinkButton href="/alimentacao/receitas" variant="outline" size="sm">
-            Receitas
-          </LinkButton>
-          <LinkButton href="/alimentacao/catalogo" variant="outline" size="sm">
-            Catálogo
-          </LinkButton>
+    <div className="min-h-svh bg-black pb-32 font-[family-name:var(--font-lexend)] text-white">
+      <div className="mx-auto max-w-[440px]">
+        {/* Header */}
+        <header className="flex items-start justify-between px-6 pt-14">
+          <div>
+            <p className="text-[13px] text-white/55">{dateStr}</p>
+            <h1 className="mt-1.5 text-[26px] font-medium uppercase leading-[1.1] tracking-tight">
+              Protocolo
+            </h1>
+          </div>
+          <button
+            type="button"
+            aria-label="Perfil"
+            className="mt-1 size-12 shrink-0 rounded-full bg-[#F24510] transition-transform active:scale-95"
+          />
+        </header>
+
+        {/* Calendar */}
+        <div className="mt-8">
+          <CalendarStrip />
         </div>
+
+        {/* Calories + macros */}
+        <div className="mt-8 px-6">
+          <CaloriesCard kcal={2456} />
+          <div className="mt-3 flex gap-3">
+            <MacroCard label="Proteína" value="70g" />
+            <MacroCard label="Carboidrato" value="170g" />
+            <MacroCard label="Gordura" value="23g" />
+          </div>
+        </div>
+
+        {/* Meals + recipes (client: opens the register / detail sheets) */}
+        <DietMeals />
       </div>
 
-      <NutritionSummaryCard totals={totals} goal={goal} />
-      <GoalsDialog goal={goal} />
-
-      <section className="flex flex-col gap-3">
-        <h2 className="text-base font-semibold tracking-tight">Hoje</h2>
-        <MealLogList logs={logs} />
-        <AddMealDialog data={data} foods={foods} recipes={recipes} />
-      </section>
-    </main>
+      <BottomNav />
+    </div>
   );
 }
